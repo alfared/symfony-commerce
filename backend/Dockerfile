@@ -10,7 +10,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 COPY composer.json composer.lock symfony.lock ./
-RUN composer install --no-dev --optimize-autoloader --no-scripts
+RUN composer config --global process-timeout 2000
+RUN composer install --no-dev --optimize-autoloader --no-scripts --prefer-source
 
 COPY . .
 
