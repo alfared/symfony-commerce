@@ -3,12 +3,13 @@ import type { ProductVariant } from '@/entities/product-variant/model/product-va
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
+
 type Props = {
 	products: Product[];
 	variants: ProductVariant[];
 };
 
-export function ProductList({ products}: Props) {
+export function ProductList({ products, variants }: Props) {
 	return (
 	  <Card className="border-slate-800 bg-slate-900 text-slate-50">
 			<CardHeader>
@@ -18,9 +19,9 @@ export function ProductList({ products}: Props) {
 			<CardContent>
 				<div className="grid gap-4">
 					{products.map((product) => {
-						const productVariants = variants.filter((variant) => {
-							return String(variant.product).endsWith(`/products/${product.id}`);
-						});
+						   const productVariants = variants.filter(
+								(variant: ProductVariant) => variant.productId === product.id,
+						   );
 
 						return (
 							<div key={product.id} className="rounded-xl border border-slate-800 bg-slate-950 p-4">
