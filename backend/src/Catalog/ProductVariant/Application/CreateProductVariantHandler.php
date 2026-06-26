@@ -2,8 +2,8 @@
 
 namespace App\Catalog\ProductVariant\Application;
 
-use App\Catalog\Product\Model\Product;
-use App\Catalog\Product\Repository\ProductRepository;
+use App\Catalog\Product\Domain\Model\Product;
+use App\Catalog\Product\Infrastructure\Doctrine\ProductRepository;
 use App\Catalog\ProductVariant\Factory\ProductVariantFactoryInterface;
 use App\Catalog\ProductVariant\Model\ProductVariant;
 use Doctrine\ORM\EntityManagerInterface;

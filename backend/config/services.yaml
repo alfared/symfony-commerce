@@ -11,8 +11,8 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-    App\Catalog\Product\Factory\ProductFactoryInterface:
-        alias: App\Catalog\Product\Factory\ProductFactory
+    App\Catalog\Product\Domain\Factory\ProductFactoryInterface:
+        alias: App\Catalog\Product\Domain\Factory\ProductFactory
 
     App\Catalog\ProductVariant\Factory\ProductVariantFactoryInterface:
         alias: App\Catalog\ProductVariant\Factory\ProductVariantFactory

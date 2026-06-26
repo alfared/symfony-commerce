@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Catalog\Product\Factory;
+namespace App\Catalog\Product\Domain\Factory;
 
-use App\Catalog\Product\Model\Product;
+use App\Catalog\Product\Domain\Model\Product;
 
 interface ProductFactoryInterface
 {

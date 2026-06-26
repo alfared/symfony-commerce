@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Catalog\Product\Api;
+namespace App\Catalog\Product\Infrastructure\Api;
 
 use App\Catalog\Product\Application\CreateProductCommand;
 use App\Catalog\Product\Application\CreateProductHandler;
-use App\Catalog\Product\Model\Product;
+use App\Catalog\Product\Domain\Model\Product;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;

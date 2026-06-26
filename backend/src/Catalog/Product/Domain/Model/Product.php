@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Catalog\Product\Model;
+namespace App\Catalog\Product\Domain\Model;
 
 
-use App\Catalog\Product\Api\CreateProductAction;
+use App\Catalog\Product\Infrastructure\Api\CreateProductAction;
 use App\Catalog\ProductVariant\Model\ProductVariant;
-use App\Catalog\Product\Repository\ProductRepository;
+use App\Catalog\Product\Infrastructure\Doctrine\ProductRepository;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Post;
 use Doctrine\Common\Collections\ArrayCollection;
