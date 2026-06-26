@@ -1,2 +1,22 @@
-node_modules/
-.env
+# Symfony
+/vendor/
+/var/cache/
+/var/log/
+/.env.local
+/.env.*.local
+
+# React / Node
+/node_modules/
+/public/build/
+/build/
+
+# IDE
+/.idea/
+/.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
