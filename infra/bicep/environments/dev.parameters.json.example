@@ -2,9 +2,6 @@
   "parameters": {
     "appSecret": {
       "value": "CHANGE_ME"
-    },
-    "databaseUrl": {
-      "value": "CHANGE_ME"
     }
   }
 }

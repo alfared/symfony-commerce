@@ -15,7 +15,7 @@ param logAnalyticsName string
 param containerAppsEnvName string
 
 param apiAppName string
-param frontendAppImage string
+param frontendAppName string
 
 param apiImage string
 param frontendImage string
@@ -25,9 +25,9 @@ param appSecret string
 
 @secure()
 param databaseUrl string
+param defaultUri string
 
 param corsAllowOrigin string
-param defaultUri string
 
 module acr './modules/acr.bicep' ={
   name: 'acr'
@@ -54,7 +54,7 @@ module containerApps './modules/container-apps.bicep' = {
     containerAppsEnvName: containerAppsEnvName
 
     apiAppName: apiAppName
-    frontendAppName: frontendAppImage
+    frontendAppName: frontendAppName
 
     logAnalyticsCustomerId: logAnalytics.outputs.customerId
     logAnalyticsSharedKey: logAnalytics.outputs.sharedKey
