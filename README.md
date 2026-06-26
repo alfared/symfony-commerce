@@ -1,4 +1,3 @@
-````md
 # Symfony Commerce
 
 > A modern, API-first e-commerce platform built with **Symfony 7**, **API Platform**, **React**, **PostgreSQL**, and **Docker**.
