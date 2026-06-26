@@ -7,7 +7,7 @@ use ApiPlatform\Metadata\Post;
 use App\Catalog\Product\Domain\Model\Product;
 use App\Catalog\ProductOption\Domain\Model\ProductOptionValue;
 use App\Catalog\ProductVariant\Infrastructure\Doctrine\ProductVariantRepository;
-use App\Catalog\ProductVariant\Api\CreateProductVariantAction;
+use App\Catalog\ProductVariant\Infrastructure\Api\CreateProductVariantAction;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Catalog\ProductOption\Model;
+namespace App\Catalog\ProductOption\Domain\Model;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
-use App\Catalog\ProductOption\Api\CreateProductOptionAction;
-use App\Catalog\ProductOption\Repository\ProductOptionRepository;
+use App\Catalog\ProductOption\Infrastructure\Api\CreateProductOptionAction;
+use App\Catalog\ProductOption\Infrastructure\Doctrine\ProductOptionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;

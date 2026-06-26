@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Catalog\ProductOption\Api;
+namespace App\Catalog\ProductOption\Infrastructure\Api;
 
-use App\Catalog\ProductOption\Application\CreateProductOptionValueCommand;
-use App\Catalog\ProductOption\Application\CreateProductOptionValueHandler;
-use App\Catalog\ProductOption\Model\ProductOptionValue;
+use App\Catalog\ProductOption\Application\CreateProductOptionValueCommand; 
+use App\Catalog\ProductOption\Application\CreateProductOptionValueHandler; 
+use App\Catalog\ProductOption\Domain\Model\ProductOptionValue;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;

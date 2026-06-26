@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Catalog\ProductOption\Model;
+namespace App\Catalog\ProductOption\Domain\Model;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
-use App\Catalog\ProductOption\Api\CreateProductOptionValueAction;
+use App\Catalog\ProductOption\Domain\Model\ProductOption;
+use App\Catalog\ProductOption\Infrastructure\Api\CreateProductOptionValueAction;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ApiResource(

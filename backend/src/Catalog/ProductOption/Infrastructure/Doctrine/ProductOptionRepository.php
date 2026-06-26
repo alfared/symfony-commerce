@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Catalog\ProductOption\Repository;
+namespace App\Catalog\ProductOption\Infrastructure\Doctrine;
 
-use App\Catalog\ProductOption\Model\ProductOption;
+use App\Catalog\ProductOption\Domain\Model\ProductOption;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

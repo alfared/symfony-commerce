@@ -29,8 +29,8 @@ doctrine:
             ProductOption:
                 is_bundle: false
                 type: attribute
-                dir: '%kernel.project_dir%/src/Catalog/ProductOption/Model'
-                prefix: 'App\Catalog\ProductOption\Model'
+                dir: '%kernel.project_dir%/src/Catalog/ProductOption/Domain/Model'
+                prefix: 'App\Catalog\ProductOption\Domain\Model'
                 alias: ProductOption
 
 when@test:

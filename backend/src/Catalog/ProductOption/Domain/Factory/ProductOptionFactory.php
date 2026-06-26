@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Catalog\ProductOption\Factory;
+namespace App\Catalog\ProductOption\Domain\Factory;
 
-use App\Catalog\ProductOption\Model\ProductOption;
-use App\Catalog\ProductOption\Model\ProductOptionValue;
+use App\Catalog\ProductOption\Domain\Model\ProductOption;
+use App\Catalog\ProductOption\Domain\Model\ProductOptionValue;
 
 final class ProductOptionFactory implements ProductOptionFactoryInterface
 {

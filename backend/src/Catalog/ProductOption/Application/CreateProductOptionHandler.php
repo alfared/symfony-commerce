@@ -2,8 +2,8 @@
 
 namespace App\Catalog\ProductOption\Application;
 
-use App\Catalog\ProductOption\Factory\ProductOptionFactoryInterface;
-use App\Catalog\ProductOption\Model\ProductOption;
+use App\Catalog\ProductOption\Domain\Factory\ProductOptionFactoryInterface; 
+use App\Catalog\ProductOption\Domain\Model\ProductOption;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class CreateProductOptionHandler
