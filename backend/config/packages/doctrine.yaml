@@ -22,8 +22,8 @@ doctrine:
             ProductVariant:
                 is_bundle: false
                 type: attribute
-                dir: '%kernel.project_dir%/src/Catalog/ProductVariant/Model'
-                prefix: 'App\Catalog\ProductVariant\Model'
+                dir: '%kernel.project_dir%/src/Catalog/ProductVariant/Domain/Model'
+                prefix: 'App\Catalog\ProductVariant\Domain\Model'
                 alias: ProductVariant
             
             ProductOption:

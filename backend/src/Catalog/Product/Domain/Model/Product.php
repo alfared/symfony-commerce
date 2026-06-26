@@ -4,7 +4,7 @@ namespace App\Catalog\Product\Domain\Model;
 
 
 use App\Catalog\Product\Infrastructure\Api\CreateProductAction;
-use App\Catalog\ProductVariant\Model\ProductVariant;
+use App\Catalog\ProductVariant\Domain\Model\ProductVariant;
 use App\Catalog\Product\Infrastructure\Doctrine\ProductRepository;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Post;

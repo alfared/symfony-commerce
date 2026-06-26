@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Catalog\ProductVariant\Repository;
+namespace App\Catalog\ProductVariant\Infrastructure\Doctrine;
 
-use App\Entity\ProductVariant;
+use App\Catalog\ProductVariant\Domain\Model\ProductVariant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

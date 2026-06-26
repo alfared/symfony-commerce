@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Catalog\ProductVariant\Factory;
+namespace App\Catalog\ProductVariant\Domain\Factory;
 
-use App\Catalog\Product\Model\Product;
-use App\Catalog\ProductVariant\Model\ProductVariant;
+use App\Catalog\Product\Domain\Model\Product;
+use App\Catalog\ProductVariant\Domain\Model\ProductVariant;
 
 final class ProductVariantFactory implements ProductVariantFactoryInterface
 {
