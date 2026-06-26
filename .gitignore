@@ -71,3 +71,7 @@ docker-data/
 **/.env.local
 **/.docker
 infra/bicep/environments/*.local.json
+
+# Azure deployment parameters
+infra/bicep/environments/dev.parameters.json
+infra/bicep/environments/prod.parameters.json
