@@ -2,8 +2,8 @@
 
 namespace App\Catalog\Product\Application;
 
-use App\Catalog\Product\Factory\ProductFactoryInterface;
-use App\Catalog\Product\Model\Product;
+use App\Catalog\Product\Domain\Factory\ProductFactoryInterface;
+use App\Catalog\Product\Domain\Model\Product;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class CreateProductHandler

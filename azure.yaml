@@ -1,0 +1,19 @@
+name: symfony-commerce
+
+metadata:
+  template: symfony-commerce@0.1.0
+
+infra:
+  provider: bicep
+  path: infra/bicep
+
+services:
+  api:
+    project: ./backend
+    language: docker
+    host: containerapp
+
+  frontend:
+    project: ./frontend
+    language: docker
+    host: containerapp

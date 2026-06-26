@@ -1,4 +1,5 @@
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
+import type { FormEvent } from 'react';
 import type { Product } from '@/entities/product/model/product';
 import type { CreateProductVariantPayload } from '@/entities/product-variant/model/product-variant.dto';
 import { Button } from '@/components/ui/button';

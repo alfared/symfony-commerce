@@ -1,22 +1,61 @@
-# Symfony
-/vendor/
-/var/cache/
-/var/log/
-/.env.local
-/.env.*.local
-
-# React / Node
-/node_modules/
-/public/build/
-/build/
-
-# IDE
-/.idea/
-/.vscode/
-
-# OS
 .DS_Store
 Thumbs.db
 
+# ==========================================
+# IDE
+# ==========================================
+
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+.idea/
+
+# ==========================================
 # Logs
+# ==========================================
+
 *.log
+logs/
+
+# ==========================================
+# Environment
+# ==========================================
+
+.env
+.env.local
+.env.*.local
+
+# ==========================================
+# Docker
+# ==========================================
+
+docker-data/
+
+# ==========================================
+# Azure Developer CLI
+# ==========================================
+
+.azure/*
+
+!.azure/config.json
+
+# ==========================================
+# Bicep
+# ==========================================
+
+*.bicepparam.user.json
+
+# ==========================================
+# Terraform (на майбутнє)
+# ==========================================
+
+*.tfstate
+*.tfstate.*
+
+**/.env
+**/.env.local
+**/.docker
+infra/bicep/environments/*.local.json
