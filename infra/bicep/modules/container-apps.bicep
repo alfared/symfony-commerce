@@ -80,7 +80,7 @@ resource apiApp 'Microsoft.App/containerApps@2024-03-01' = {
           env: [
             {
               name: 'APP_ENV'
-              value: environment == 'prod' ? 'prod' : 'dev'
+              value: 'prod'
             }
             {
               name: 'APP_SECRET'
@@ -97,6 +97,10 @@ resource apiApp 'Microsoft.App/containerApps@2024-03-01' = {
             {
               name: 'DEFAULT_URI'
               value: defaultUri
+            }
+            {
+              name: 'APP_DEBUG'
+              value: '0'
             }
           ]
           resources: {

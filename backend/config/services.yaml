@@ -17,6 +17,9 @@ services:
     App\Catalog\ProductVariant\Domain\Factory\ProductVariantFactoryInterface:
         alias: App\Catalog\ProductVariant\Domain\Factory\ProductVariantFactory
     
+    App\Catalog\Product\Domain\Repository\ProductRepositoryInterface:
+        alias: App\Catalog\Product\Infrastructure\Doctrine\ProductRepository
+    
     App\Catalog\ProductOption\Domain\Factory\ProductOptionFactoryInterface:
         alias: App\Catalog\ProductOption\Domain\Factory\ProductOptionFactory
 
