@@ -172,6 +172,13 @@ class ProductVariant
 
     public function addOptionValue(ProductOptionValue $optionValue): void
     {
-        
+        if (!$this->optionValues->contains($optionValue)) {
+            $this->optionValues->add($optionValue);
+        }
+    }
+
+    public function removeOptionValue(ProductOptionValue $optionValue): void
+    {
+        $this->optionValues->removeElement($optionValue);
     }
 }
