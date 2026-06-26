@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Catalog\Product\Application;
+
+use App\Catalog\Product\Factory\ProductFactoryInterface;
+use App\Catalog\Product\Model\Product;
+use Doctrine\ORM\EntityManagerInterface;
+
+final readonly class CreateProductHandler
+{
+    public function __construct(
+        private ProductFactoryInterface $productFactory,
+        private EntityManagerInterface $entityManager,
+    ) {
+    }
+
+    public function __invoke(CreateProductCommand $command): Product
+    {
+        $product = $this->productFactory->createWithData(
+            code: $command->code,
+            name: $command->name,
+            slug: $command->slug,
+            description: $command->description,
+            enabled: $command->enabled,
+        );
+
+        $this->entityManager->persist($product);
+        $this->entityManager->flush();
+
+        return $product;
+    }
+}

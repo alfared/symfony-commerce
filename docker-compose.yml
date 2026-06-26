@@ -1,0 +1,50 @@
+services:
+  nginx:
+    container_name: symfony-commerce-nginx
+    image: nginx:1.27-alpine
+    ports:
+      - "8081:80"
+    volumes:
+      - ./backend:/var/www/backend
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+
+  php:
+    container_name: symfony-commerce-php
+    build: 
+      context: .
+      dockerfile: docker/php/Dockerfile
+    working_dir: /var/www/backend
+    volumes:
+      - ./backend:/var/www/backend
+
+  postgres:
+    container_name: symfony-commerce-postgres
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: commerce
+      POSTGRES_USER: commerce
+      POSTGRES_PASSWORD: commerce
+    ports:
+      - "5433:5432"
+    volumes:
+      - symfony-commerce-postgres-data:/var/lib/postgresql/data
+
+  redis:
+    container_name: symfony-commerce-redis
+    image: redis:8-alpine
+    ports:
+     - "6380:6379"
+
+  frontend:
+    container_name: symfony-commerce-frontend
+    image: node:22-alpine
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    ports:
+      - "5174:5173"
+volumes:
+  symfony-commerce-postgres-data:

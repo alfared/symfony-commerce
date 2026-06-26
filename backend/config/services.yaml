@@ -1,0 +1,23 @@
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+    App\Catalog\Product\Factory\ProductFactoryInterface:
+        alias: App\Catalog\Product\Factory\ProductFactory
+
+    App\Catalog\ProductVariant\Factory\ProductVariantFactoryInterface:
+        alias: App\Catalog\ProductVariant\Factory\ProductVariantFactory
+    
+    App\Catalog\ProductOption\Factory\ProductOptionFactoryInterface:
+        alias: App\Catalog\ProductOption\Factory\ProductOptionFactory
+
+
