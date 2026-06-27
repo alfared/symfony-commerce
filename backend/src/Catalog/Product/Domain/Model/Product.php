@@ -4,6 +4,7 @@ namespace App\Catalog\Product\Domain\Model;
 
 
 use App\Catalog\Product\Infrastructure\Api\CreateProductAction;
+use App\Catalog\Category\Domain\Model\Category;
 use App\Catalog\ProductVariant\Domain\Model\ProductVariant;
 use App\Catalog\Product\Infrastructure\Doctrine\ProductRepository;
 use ApiPlatform\Metadata\ApiResource;
@@ -50,6 +51,10 @@ class Product
 
     #[ORM\Column(nullable: true)]
     private ?bool $active = null;
+
+    #[ORM\ManyToOne(targetEntity: Category::class)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
+    private ?Category $category = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
@@ -131,6 +136,16 @@ class Product
         $this->active = $active;
 
         return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): void
+    {
+        $this->category = $category;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable

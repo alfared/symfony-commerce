@@ -11,7 +11,7 @@ final class ProductFactory implements ProductFactoryInterface
         return new Product();
     }
 
-      public function createWithData(
+    public function createWithData(
         string $code,
         string $name,
         string $slug,
