@@ -21,7 +21,7 @@ final readonly class CreateProductHandler
             name: $command->name,
             slug: $command->slug,
             description: $command->description,
-            enabled: $command->enabled,
+            active: $command->active,
         );
 
         $this->entityManager->persist($product);

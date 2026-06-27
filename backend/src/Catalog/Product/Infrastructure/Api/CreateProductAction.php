@@ -30,7 +30,7 @@ final readonly class CreateProductAction
             name: (string) $data['name'],
             slug: (string) $data['slug'],
             description: $data['description'] ?? null,
-            enabled: $data['enabled'] ?? true,
+            active: $data['active'] ?? true,
         ));
     }
 }

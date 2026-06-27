@@ -13,6 +13,6 @@ interface ProductFactoryInterface
         string $name,
         string $slug,
         ?string $description = null,
-        bool $enabled = true
+        bool $active = true
     ): Product;
 }

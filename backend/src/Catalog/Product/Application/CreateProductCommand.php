@@ -9,7 +9,7 @@ final readonly class CreateProductCommand
         public string $name,
         public string $slug,
         public ?string $description = null,
-        public bool $enabled = true,
+        public bool $active = true,
     ){
 
     }

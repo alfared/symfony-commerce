@@ -16,7 +16,7 @@ final class ProductFactory implements ProductFactoryInterface
         string $name,
         string $slug,
         ?string $description = null,
-        bool $enabled = true
+        bool $active = true
     ): Product {
         $product = $this->createNew();
 
@@ -24,7 +24,7 @@ final class ProductFactory implements ProductFactoryInterface
         $product->setName($name);
         $product->setSlug($slug);
         $product->setDescription($description);
-        $product->setEnabled($enabled);
+        $product->setActive($active);
 
         return $product;
     }
