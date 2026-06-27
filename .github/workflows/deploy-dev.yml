@@ -1,70 +1,21 @@
-name: Deploy Dev
+name: Deploy Development
 
 on:
   push:
     branches:
-      - develop
-
-env:
-  ACR_NAME: symfonycommercedevacr
-  ACR_LOGIN_SERVER: symfonycommercedevacr.azurecr.io
-  RESOURCE_GROUP: symfony-commerce-dev-rg
-  API_APP_NAME: symfony-commerce-dev-api
-  FRONTEND_APP_NAME: symfony-commerce-dev-frontend
-  API_URL: https://symfony-commerce-dev-api.purpletree-734a631d.northeurope.azurecontainerapps.io/api
+       - develop
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: Development
+      acr-name: symfonycommercedevacr
+      acr-login-server: symfonycommercedevacr.azurecr.io
+      resource-group: symfony-commerce-dev-api
+      api-app-name: symfony-commerce-dev-api
+      frontend-app-name: symfony-commerce-dev-frontend
+      api-url: https://symfony-commerce-dev-api.purpletree-734a631d.northeurope.azurecontainerapps.io/api
+      image-tag-prefix: dev
 
-    permissions:
-      id-token: write
-      contents: read
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      - run: az acr login --name $ACR_NAME
-
-      - name: Build and push API
-        run: |
-          TAG=dev-${{ github.sha }}
-          docker build --no-cache -t $ACR_LOGIN_SERVER/api:$TAG ./backend
-          docker push $ACR_LOGIN_SERVER/api:$TAG
-          echo "API_IMAGE=$ACR_LOGIN_SERVER/api:$TAG" >> $GITHUB_ENV
-
-      - name: Build and push Frontend
-        run: |
-          TAG=dev-${{ github.sha }}
-          docker build --no-cache \
-              --build-arg VITE_API_URL=$API_URL \
-            -t $ACR_LOGIN_SERVER/frontend:$TAG \
-            ./frontend
-          docker push $ACR_LOGIN_SERVER/frontend:$TAG
-          echo "FRONTEND_IMAGE=$ACR_LOGIN_SERVER/frontend:$TAG" >> $GITHUB_ENV
-      - name: Deploy API
-        run: |
-          az containerapp update \
-             --resource-group $RESOURCE_GROUP \
-             --name $API_APP_NAME \
-             --image $API_IMAGE
-
-      - name: Run database migrations
-        run: |
-          az containerapp exec \
-             --resource-group $RESOURCE_GROUP \
-             --name $API_APP_NAME \
-             --command "php bin/console doctrine:migrations:migrate --no-interaction"
-
-      - name: Deploy Frontend
-        run: |
-          az containerapp update \
-             --resource-group $RESOURCE_GROUP \
-             --name $FRONTEND_APP_NAME \
-             --image $FRONTEND_IMAGE
+    secrets: inherit
