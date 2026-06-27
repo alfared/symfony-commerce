@@ -49,4 +49,9 @@ RUN rm -rf var/cache/prod \
     && chown -R www-data:www-data var \
     && chmod -R 777 var
 
+COPY docker/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+
 EXPOSE 80

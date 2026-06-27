@@ -79,13 +79,6 @@ jobs:
             --name ${{ inputs.api-app-name }} \
             --image $API_IMAGE
 
-      - name: Run database migrations
-        run: |
-          az containerapp exec \
-            --resource-group ${{ inputs.resource-group }} \
-            --name ${{ inputs.api-app-name }} \
-            --command "php bin/console doctrine:migrations:migrate --no-interaction"
-
       - name: Deploy Frontend
         run: |
           az containerapp update \
