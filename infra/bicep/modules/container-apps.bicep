@@ -91,6 +91,10 @@ resource apiApp 'Microsoft.App/containerApps@2024-03-01' = {
               secretRef: 'database-url'
             }
             {
+              name: 'RUN_MIGRATIONS'
+              value: environment == 'prod' ? '0' : '1'
+            }
+            {
               name: 'CORS_ALLOW_ORIGIN'
               value: corsAllowOrigin
             }

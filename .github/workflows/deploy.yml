@@ -1,0 +1,87 @@
+name: Reusable Deploy
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      acr-name:
+        required: true
+        type: string
+      acr-login-server:
+        required: true
+        type: string
+      resource-group:
+        required: true
+        type: string
+      api-app-name:
+        required: true
+        type: string
+      frontend-app-name:
+        required: true
+        type: string
+      api-url:
+        required: true
+        type: string
+      image-tag-prefix:
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - run: az acr login --name ${{ inputs.acr-name }}
+
+      - name: Build and push API
+        run: |
+          TAG=${{ inputs.image-tag-prefix }}-${{ github.sha }}
+          API_IMAGE=${{ inputs.acr-login-server }}/api:$TAG
+
+          docker build --no-cache -t $API_IMAGE ./backend
+          docker push $API_IMAGE
+
+          echo "API_IMAGE=$API_IMAGE" >> $GITHUB_ENV
+
+      - name: Build and push Frontend
+        run: |
+          TAG=${{ inputs.image-tag-prefix }}-${{ github.sha }}
+          FRONTEND_IMAGE=${{ inputs.acr-login-server }}/frontend:$TAG
+
+          docker build --no-cache \
+            --build-arg VITE_API_URL=${{ inputs.api-url }} \
+            -t $FRONTEND_IMAGE \
+            ./frontend
+
+          docker push $FRONTEND_IMAGE
+
+          echo "FRONTEND_IMAGE=$FRONTEND_IMAGE" >> $GITHUB_ENV
+
+      - name: Deploy API
+        run: |
+          az containerapp update \
+            --resource-group ${{ inputs.resource-group }} \
+            --name ${{ inputs.api-app-name }} \
+            --image $API_IMAGE
+
+      - name: Deploy Frontend
+        run: |
+          az containerapp update \
+            --resource-group ${{ inputs.resource-group }} \
+            --name ${{ inputs.frontend-app-name }} \
+            --image $FRONTEND_IMAGE

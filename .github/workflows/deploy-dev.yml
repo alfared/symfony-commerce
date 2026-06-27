@@ -1,0 +1,25 @@
+name: Deploy Development
+
+on:
+  push:
+    branches:
+       - develop
+    
+permissions:
+  id-token: write
+  contents: read
+  
+jobs:
+  deploy:
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: Development
+      acr-name: symfonycommercedevacr
+      acr-login-server: symfonycommercedevacr.azurecr.io
+      resource-group: symfony-commerce-dev-rg
+      api-app-name: symfony-commerce-dev-api
+      frontend-app-name: symfony-commerce-dev-frontend
+      api-url: https://symfony-commerce-dev-api.purpletree-734a631d.northeurope.azurecontainerapps.io/api
+      image-tag-prefix: dev
+
+    secrets: inherit
