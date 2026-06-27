@@ -16,7 +16,7 @@ jobs:
       environment: Development
       acr-name: symfonycommercedevacr
       acr-login-server: symfonycommercedevacr.azurecr.io
-      resource-group: symfony-commerce-dev-api
+      resource-group: symfony-commerce-dev-rg
       api-app-name: symfony-commerce-dev-api
       frontend-app-name: symfony-commerce-dev-frontend
       api-url: https://symfony-commerce-dev-api.purpletree-734a631d.northeurope.azurecontainerapps.io/api
