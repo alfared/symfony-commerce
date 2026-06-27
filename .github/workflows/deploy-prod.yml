@@ -19,6 +19,6 @@ jobs:
       resource-group: symfony-commerce-prod-rg
       api-app-name: symfony-commerce-prod-api
       frontend-app-name: symfony-commerce-prod-frontend
-      api-url: https://placeholder/api
+      api-url: https://symfony-commerce-prod-api.wittypond-341c1915.northeurope.azurecontainerapps.io/api
       image-tag-prefix: prod
     secrets: inherit
