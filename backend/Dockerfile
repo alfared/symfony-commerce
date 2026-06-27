@@ -15,21 +15,12 @@ RUN composer install --no-dev --optimize-autoloader --no-scripts --prefer-source
 
 COPY . .
 
-RUN composer dump-autoload --optimize --no-dev \
-    && php bin/console cache:clear --env=prod || true \
-    && chown -R www-data:www-data var \
-    && chmod -R 775 var
+ENV APP_ENV=prod
+ENV APP_DEBUG=0
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
 RUN composer dump-autoload --optimize --no-dev \
     && php bin/console cache:clear --env=prod || true
-
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
-
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
-    /etc/apache2/sites-available/*.conf \
-    /etc/apache2/apache2.conf \
-    /etc/apache2/conf-available/*.conf
-    
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
@@ -39,9 +30,13 @@ RUN cat > /etc/apache2/sites-available/000-default.conf <<'EOF'
     DocumentRoot /var/www/html/public
 
     <Directory /var/www/html/public>
-        AllowOverride All
+        Options -Indexes +FollowSymLinks
+        AllowOverride None
         Require all granted
-        FallbackResource /index.php
+
+        RewriteEngine On
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteRule ^ index.php [QSA,L]
     </Directory>
 
     ErrorLog ${APACHE_LOG_DIR}/error.log

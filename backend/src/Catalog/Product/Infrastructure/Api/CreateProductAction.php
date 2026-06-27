@@ -25,12 +25,21 @@ final readonly class CreateProductAction
             return new JsonResponse(['error' => 'Invalid JSON body'], 400);
         }
 
-        return ($this->handler)(new CreateProductCommand(
+        $product = ($this->handler)(new CreateProductCommand(
             code: (string) $data['code'],
             name: (string) $data['name'],
             slug: (string) $data['slug'],
             description: $data['description'] ?? null,
             active: $data['active'] ?? true,
         ));
+
+        return new JsonResponse([
+            'id' => $product->getId(),
+            'code' => $product->getCode(),
+            'name' => $product->getName(),
+            'slug' => $product->getSlug(),
+            'description' => $product->getDescription(),
+            'active' => $product->isActive(),
+        ], 201);
     }
 }
