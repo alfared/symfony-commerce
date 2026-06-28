@@ -6,6 +6,11 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use App\Catalog\Category\Infrastructure\Api\UpdateCategoryAction;
+use App\Catalog\Category\Infrastructure\Api\GetCategoriesAction;
+use App\Catalog\Category\Infrastructure\Api\GetCategoryAction;
+use App\Catalog\Category\Infrastructure\Api\GetCategoryByCodeAction;
 use App\Catalog\Product\Domain\Model\Product;
 use App\Catalog\Category\Infrastructure\Api\CreateCategoryAction;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,8 +21,24 @@ use Doctrine\Common\Collections\Collection;
 #[ORM\Table(name: 'category')]
 #[ApiResource(
     operations: [
-        new GetCollection(),
-        new Get(),
+        new GetCollection(
+            uriTemplate: '/categories',
+            controller: GetCategoriesAction::class,
+            read: false,
+            name: 'get_categories',
+        ),
+        new Get(
+            uriTemplate: '/categories/{id}',
+            controller: GetCategoryAction::class,
+            read: false,
+            name: 'get_category'
+        ),
+        new Get(
+            uriTemplate: '/categories/by-code/{code}',
+            controller: GetCategoryByCodeAction::class,
+            read: false,
+            name: 'get_category_by_code'
+        ),
         new Post(
             uriTemplate: '/categories',
             controller: CreateCategoryAction::class,
@@ -25,6 +46,13 @@ use Doctrine\Common\Collections\Collection;
             deserialize: false,
             name: 'create_category',
         ),
+        new Put(
+            uriTemplate: '/categories/{id}',
+            controller: UpdateCategoryAction::class,
+            read: false,
+            deserialize: false,
+            name: 'update_category',
+        )
     ]
 )]
 class Category 

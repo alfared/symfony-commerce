@@ -18,5 +18,14 @@ final class CategoryFactory implements CategoryFactoryInterface
        ?string $description = null,
        bool $enabled = true
     ): Category {
+        $category = new Category();
+
+        $category->setCode($code);
+        $category->setName($name);
+        $category->setSlug($slug);
+        $category->setDescription($description);
+        $category->setEnabled($enabled);
+
+        return $category;
     }
 }

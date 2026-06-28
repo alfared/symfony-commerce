@@ -8,7 +8,7 @@ final readonly class CreateCategoryCommand
         public string $code,
         public string $name,
         public string $slug,
-        public ?string $desription = null,
+        public ?string $description = null,
         public bool $enabled = true,
     ){
     }

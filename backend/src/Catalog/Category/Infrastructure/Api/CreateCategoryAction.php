@@ -25,7 +25,7 @@ final readonly class CreateCategoryAction
             return new JsonResponse(['error' => 'Invalid JSON body'], 400);
         }
 
-        $category = ($this->handler)(new CreateProductCommand(
+        $category = ($this->handler)(new CreateCategoryCommand(
             code: (string) $data['code'],
             name: (string) $data['name'],
             slug: (string) $data['slug'],
@@ -35,11 +35,11 @@ final readonly class CreateCategoryAction
 
         return new JsonResponse([
             'id' => $category->getId(),
-            'code' => $product->getCode(),
-            'name' => $product->getName(),
-            'slug' => $product->getSlug(),
-            'description' => $product->getDescription(),
-            'enabled' => $product->isEnabled(),
+            'code' => $category->getCode(),
+            'name' => $category->getName(),
+            'slug' => $category->getSlug(),
+            'description' => $category->getDescription(),
+            'enabled' => $category->isEnabled(),
         ], 201);
     }
 }

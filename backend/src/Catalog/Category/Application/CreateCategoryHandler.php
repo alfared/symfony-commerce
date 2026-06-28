@@ -21,7 +21,7 @@ final readonly class CreateCategoryHandler
             name: $command->name,
             slug: $command->slug,
             description: $command->description,
-            active: $command->enabled,
+            enabled: $command->enabled,
         );
 
         $this->entityManager->persist($category);

@@ -22,5 +22,11 @@ services:
     
     App\Catalog\ProductOption\Domain\Factory\ProductOptionFactoryInterface:
         alias: App\Catalog\ProductOption\Domain\Factory\ProductOptionFactory
+    
+    App\Catalog\Category\Domain\Repository\CategoryRepositoryInterface:
+        alias: App\Catalog\Category\Infrastructure\Doctrine\CategoryRepository
+    
+    App\Catalog\Category\Infrastructure\Api\UpdateCategoryAction:
+        tags: ['controller.service_arguments']
 
 

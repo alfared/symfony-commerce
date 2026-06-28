@@ -14,6 +14,21 @@ final class CategoryRepository extends ServiceEntityRepository implements Catego
         parent::__construct($registry, Category::class);
     }
 
+    public function findAllEnabled(): array 
+    {
+        return $this->createQueryBuilder('category')
+            ->andWhere('category.enabled = :enabled')
+            ->setParameter('enabled', true)
+            ->orderBy('category.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findById(int $id): ?Category
+    {
+        return $this->find($id);
+    }
+
     public function findOneByCode(string $code): ?Category
     {
         return $this->findOneBy(['code' => $code]);
