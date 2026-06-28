@@ -10,3 +10,4 @@ api_platform:
             - '%kernel.project_dir%/src/Catalog/Product/Domain/Model'
             - '%kernel.project_dir%/src/Catalog/ProductVariant/Domain/Model'
             - '%kernel.project_dir%/src/Catalog/ProductOption/Domain/Model'
+            - '%kernel.project_dir%/src/Catalog/Category/Domain/Model'
