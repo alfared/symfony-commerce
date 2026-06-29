@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createProduct, fetchProducts } from '@/entities/product/api/product.api';
 import { ProductList } from '@/entities/product/ui/ProductList';
+import { CategoryManagement } from '@/widgets/category-management/CategoryManagement';
 import {
   createProductVariant,
   fetchProductVariants,
@@ -53,9 +54,13 @@ export function ProductsPage() {
                 />
 
                 <div className="lg:col-span-2">
-                    <ProductList products={products} variants={variants} />
+                    <ProductList 
+                      products={products} 
+                      variants={variants} 
+                    />
                 </div>
             </div>
+            <CategoryManagement />
         </div>
     </main>
   );
