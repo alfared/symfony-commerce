@@ -1,12 +1,8 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ProductsPage } from '../pages/products/ProductsPage';
+import { HomePage } from '@/pages/HomePage';
+import { AdminCatalogPage } from '@/pages/AdminCatalogPage';
 
-const queryClient = new QueryClient();
+export default function App() {
+  const isAdmin = window.location.pathname.startsWith('/admin');
 
-export function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <ProductsPage />
-    </QueryClientProvider>
-  );
+  return isAdmin ? <AdminCatalogPage /> : <HomePage />;
 }
