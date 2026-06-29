@@ -3,6 +3,7 @@ import { toProduct } from '../mapper/product.mapper';
 import type { Product } from '../model/product';
 import type { CreateProductPayload, ProductsCollectionDto } from '../model/product.dto';
 
+
 export async function fetchProducts(): Promise<Product[]> {
     const response = await apiClient.get<ProductsCollectionDto>('/products');
     const items = response.data.member ?? response.data['hydra:member'] ?? [];
