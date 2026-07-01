@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchProducts } from "@/entities/product/api/product.api";
 import type { Product } from "@/entities/product/model/product";
@@ -37,9 +38,12 @@ export function ProductGrid() {
                 {product.description}
               </p>
 
-              <button className="mt-5 w-full rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-950">
+              <Link
+                to={`/products/${product.slug}`}
+                className="mt-5 block w-full rounded-full bg-white px-4 py-2 text-center text-sm font-semibold text-slate-950"
+              >
                 View product
-              </button>
+              </Link>
             </div>
           </article>
         ))}

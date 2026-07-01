@@ -1,8 +1,6 @@
-import { HomePage } from '@/pages/HomePage';
-import { AdminCatalogPage } from '@/pages/AdminCatalogPage';
+import { RouterProvider } from 'react-router-dom';
+import { router }  from '../router/router';
 
 export default function App() {
-  const isAdmin = window.location.pathname.startsWith('/admin');
-
-  return isAdmin ? <AdminCatalogPage /> : <HomePage />;
+  return <RouterProvider router={router} />
 }
