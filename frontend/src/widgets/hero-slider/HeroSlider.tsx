@@ -1,8 +1,10 @@
+import { Link } from 'react-router-dom';
+
 const slides = [
   {
     title: 'New tech arrivals',
     subtitle: 'Discover smartphones, laptops and accessories for your daily workflow.',
-    cta: 'Shop now',
+    cta: <Link to='/catalog' className="rounded-full bg-white px-6 py-3 font-semibold text-slate-950">Shop now</Link>,
   },
   {
     title: 'Build your perfect setup',
