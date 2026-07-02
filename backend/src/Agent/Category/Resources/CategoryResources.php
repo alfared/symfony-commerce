@@ -2,34 +2,30 @@
 
 namespace App\Agent\Category\Resources;
 
+use App\Agent\Shared\Base\AbstractResource;
+use App\Agent\Shared\Contract\ResourceInterface;
+use App\Agent\Shared\Mapper\CategoryMapper;
 use App\Catalog\Category\Domain\Model\Category;
 use App\Catalog\Category\Domain\Repository\CategoryRepositoryInterface;
 use Mcp\Capability\Attribute\McpResource;
 
-final readonly class CategoryResources
+final readonly class CategoryResources extends AbstractResource implements ResourceInterface
 {
      public function __construct(
         private CategoryRepositoryInterface $categories,
+        private CategoryMapper $mapper,
     ) {
     }
 
     #[McpResource(
         uri: 'category://list',
-        name: 'Category list',
+        name: 'category_list',
         description: 'List enabled catalog categories'
     )]
     public function listCategories(): array 
     {
-        return array_map(
-            fn (Category $category): array => [
-                'id' => $category->getId(),
-                'code' => $category->getCode(),
-                'name' => $category->getName(),
-                'slug' => $category->getSlug(),
-                'description' => $category->getDescription(),
-                'enabled' => $category->isEnabled(),
-            ],
-            $this->categories->findAllEnabled(),
+        return $this->collection(
+            $this->mapper->manyToArray($this->categories->findAllEnabled())
         );
     }
 }

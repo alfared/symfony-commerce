@@ -1,7 +1,11 @@
 <?php
 
-namespace App\Agent\Catalog;
+namespace App\Agent\Category\Tools;
 
+use App\Agent\Shared\Base\AbstractTool;
+use App\Agent\Shared\Contract\ToolInterface;
+use App\Agent\Shared\Tool\ToolResponse;
+use App\Agent\Shared\Mapper\CategoryMapper;
 use App\Catalog\Category\Application\CreateCategoryCommand;
 use App\Catalog\Category\Application\CreateCategoryHandler;
 use App\Catalog\Category\Application\UpdateCategoryCommand;
@@ -10,12 +14,13 @@ use App\Catalog\Category\Domain\Model\Category;
 use App\Catalog\Category\Domain\Repository\CategoryRepositoryInterface;
 use Mcp\Capability\Attribute\McpTool;
 
-final readonly class CategoryTools
+final readonly class CategoryTools extends AbstractTool implements ToolInterface
 {
     public function __construct(
         private CreateCategoryHandler $createCategory,
         private UpdateCategoryHandler $updateCategory,
         private CategoryRepositoryInterface $categories,
+        private CategoryMapper $mapper
     ) {
     }
 
@@ -27,15 +32,19 @@ final readonly class CategoryTools
        ?string $description = null,
        bool $enabled = true,
     ): array {
-       $category = ($this->createCategory)(new CreateCategoryCommand(
-            code: $code,
-            name: $name,
-            slug: $slug,
-            description: $description,
-            enabled: $enabled,
-       ));
+       try {
+            $category = ($this->createCategory)(new CreateCategoryCommand(
+                code: $code,
+                name: $name,
+                slug: $slug,
+                description: $description,
+                enabled: $enabled,
+            ));
 
-       return $this->normalize($category);
+            return ToolResponse::success($this->mapper->toArray($category))->toArray();
+       } catch (\Throwable $exception) {
+            return ToolResponse::error($exception->getMessage())->toArray();
+       }
     }
 
     #[McpTool(name: 'update_category', description: 'Update a catalog category')]
@@ -47,48 +56,42 @@ final readonly class CategoryTools
         ?string $description = null,
         ?bool $enabled = null,
     ): array {
-        $category = ($this->updateCategory)(new updateCategoryCommand(
-            id: $id,
-            code: $code,
-            name: $name,
-            slug: $slug,
-            description: $description,
-            enabled: $enabled
-        ));
 
-        return $this->normalize($category);
+        try {
+            $category = ($this->updateCategory)(new updateCategoryCommand(
+                id: $id,
+                code: $code,
+                name: $name,
+                slug: $slug,
+                description: $description,
+                enabled: $enabled
+            ));
+
+            return ToolResponse::success($this->mapper->toArray($category))->toArray();
+        } catch (\Throwable $exception) {
+            return ToolResponse::error($exception->getMessage())->toArray();
+        }
     }
 
     #[McpTool(name: 'list_categories', description: 'List enabled catalog categories')]
     public function listCategories(): array 
     {
-        return array_map(
-            fn (Category $category): array => $this->normalize($category),
-            $this->categories->findAllEnabled(),
+        return $this->execute(
+            fn() => $this->mapper->manyToArray($this->categories->findAllEnabled())
         );
     }
 
     #[McpTool(name: 'get_category_by_code', description: 'Get a category by code')]
     public function getCategoryByCode(string $code): array
     {
-        $category = $this->categories->findOneByCode($code);
+        return $this->execute(function () use ($code): array {
+            $category = $this->categories->findOneByCode($code);
 
-        if (!$category instanceof Category) {
-            return ['error' => 'Category not found'];
-        }
+            if (!$category instanceof Category) {
+                throw new \RuntimeException('Category not found');
+            }
 
-        return $this->normalize($category);
-    }
-
-    private function normalize(Category $category): array 
-    {
-        return [
-            'id' => $category->getId(),
-            'code' => $category->getCode(),
-            'name' => $category->getName(),
-            'slug' => $category->getSlug(),
-            'description' => $category->getDescription(),
-            'enabled' => $category->isEnabled(),
-        ];
+            return $this->mapper->toArray($category);
+        });
     }
 }
