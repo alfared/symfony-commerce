@@ -26,7 +26,8 @@ final class MakeAgentModuleCommand extends Command
     {
         $this->addArgument('entity', InputArgument::REQUIRED, 'Entity name, e.g. Brand')
              ->addOption('force', null, InputOption::VALUE_NONE, 'Overwrite existing files')
-             ->addOption('dry-run', null, InputOption::VALUE_NONE, 'Show files without writing them');
+             ->addOption('dry-run', null, InputOption::VALUE_NONE, 'Show files without writing them')
+             ->addOption('only', null, InputOption::VALUE_REQUIRED, 'Generate only: tools, resources, prompts, shared');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -35,6 +36,13 @@ final class MakeAgentModuleCommand extends Command
         $baseDir = $this->projectDir . '/src/Agent/' . $entity;
         $force = (bool) $input->getOption('force');
         $dryRun = (bool) $input->getOption('dry-run');
+        $only = $input->getOption('only');
+        $allowedOnly = [null, 'tools', 'resources','prompts','shared'];
+
+        $generateTools = $only === null || $only === 'tools';
+        $generateResources = $only === null || $only === 'resources';
+        $generatePrompts = $only === null || $only === 'prompts';
+        $generateShared = $only === null || $only === 'shared';
 
         $fs = new Filesystem();
 
@@ -44,11 +52,29 @@ final class MakeAgentModuleCommand extends Command
             $baseDir . '/Prompts',
         ]);
 
-        $this->dump($fs, $baseDir . "/Tools/{$entity}Tools.php", $this->toolsTemplate($entity), $force, $dryRun, $output);
-        $this->dump($fs, $baseDir . "/Resources/{$entity}Resources.php", $this->resourcesTemplate($entity), $force, $dryRun, $output);
-        $this->dump($fs, $baseDir . "/Prompts/{$entity}Prompts.php", $this->promptsTemplate($entity), $force, $dryRun, $output);
-        $this->dump($fs, $this->projectDir . "/src/Agent/Shared/Dto/{$entity}Dto.php", $this->dtoTemplate($entity), $force, $dryRun, $output);
-        $this->dump($fs, $this->projectDir . "/src/Agent/Shared/Mapper/{$entity}Mapper.php", $this->mapperTemplate($entity), $force, $dryRun, $output);
+        if (!in_array($only, $allowedOnly, true)) {
+             $output->writeln('<error>Invalid --only value.</error>');
+             $output->writeln('Allowed values: tools, resources, prompts, shared');
+
+             return Command::FAILURE;
+        }
+
+        if ($generateTools) {
+            $this->dump($fs, $baseDir . "/Tools/{$entity}Tools.php", $this->toolsTemplate($entity), $force, $dryRun, $output);
+        }
+
+        if ($generateResources) {
+            $this->dump($fs, $baseDir . "/Resources/{$entity}Resources.php", $this->resourcesTemplate($entity), $force, $dryRun, $output);
+        }
+
+        if ($generatePrompts) {
+            $this->dump($fs, $baseDir . "/Prompts/{$entity}Prompts.php", $this->promptsTemplate($entity), $force, $dryRun, $output);
+        }
+
+        if ($generateShared) {
+            $this->dump($fs, $this->projectDir . "/src/Agent/Shared/Dto/{$entity}Dto.php", $this->dtoTemplate($entity), $force, $dryRun, $output);
+            $this->dump($fs, $this->projectDir . "/src/Agent/Shared/Mapper/{$entity}Mapper.php", $this->mapperTemplate($entity), $force, $dryRun, $output); 
+        }
 
         $output->writeln("<info>Agent module for {$entity} generated.</info>");
 
