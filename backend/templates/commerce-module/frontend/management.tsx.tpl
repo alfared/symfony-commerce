@@ -5,22 +5,22 @@ import type { Create{{ Entity }}Payload } from '@/entities/{{ entityKebab }}/mod
 import { {{ Entity }}List } from '@/entities/{{ entityKebab }}/ui/{{ Entity }}List';
 import { Create{{ Entity }}Form } from '@/features/{{ entityKebab }}/create/Create{{ Entity }}Form';
 
-export function {{ Entity }}Management {
-    const [items, setItems] = useState<{{ Entity}}[]>([]);
+export function {{ Entity }}Management() {
+  const [items, setItems] = useState<{{ Entity }}[]>([]);
 
-    useEffect(() => {
-        get{{ Entity }}s().then(setItems);
-    }, []);
+  useEffect(() => {
+    get{{ Entity }}s().then(setItems);
+  }, []);
 
-    async function handleCreate(payload: Create{{ Entity }}Payload) {
-         const item = await create{{ Entity }}(payload);
-         setItems((current) => [item, ...current]);
-    }
+  async function handleCreate(payload: Create{{ Entity }}Payload) {
+    const item = await create{{ Entity }}(payload);
+    setItems((current) => [item, ...current]);
+  }
 
-    return (
-        <section className="grid gap-6">
-            <Create{{ Entity }}Form onSubmit{handleCreate} />
-            <{{ Entity }}List items={items} />
-        </section>
-    );
+  return (
+    <section className="grid gap-6">
+      <Create{{ Entity }}Form onSubmit={handleCreate} />
+      <{{ Entity }}List items={items} />
+    </section>
+  );
 }
