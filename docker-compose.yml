@@ -18,6 +18,7 @@ services:
     working_dir: /var/www/backend
     volumes:
       - ./backend:/var/www/backend
+      - ./frontend:/var/www/frontend
 
   postgres:
     container_name: symfony-commerce-postgres
