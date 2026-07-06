@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {
-  createProduct,
-  fetchProducts,
+  getProducts,
+  createProduct
 } from "@/entities/product/api/product.api";
 import { fetchProductVariants } from "@/entities/product-variant/api/product-variant.api";
 import type { Product } from "@/entities/product/model/product";
@@ -15,7 +15,7 @@ export function ProductManagement() {
   const [variants, setVariants] = useState<ProductVariant[]>([]);
 
   useEffect(() => {
-    Promise.all([fetchProducts(), fetchProductVariants()]).then(
+    Promise.all([getProducts(), fetchProductVariants()]).then(
       ([products, variants]) => {
         setProducts(products);
         setVariants(variants);

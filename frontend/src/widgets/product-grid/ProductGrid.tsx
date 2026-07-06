@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { fetchProducts } from "@/entities/product/api/product.api";
+import { getProducts } from "@/entities/product/api/product.api"
 import type { Product } from "@/entities/product/model/product";
 
 export function ProductGrid() {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    fetchProducts().then(setProducts);
+    getProducts().then(setProducts);
   }, []);
 
   return (

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getProducts } from "@/entities/product/api/productApi";
+import { getProducts } from "@/entities/product/api/product.api";
 import type { Product } from "@/entities/product/model/product";
 
 export function ProductPage() {
