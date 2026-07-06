@@ -2,7 +2,7 @@
 
 namespace App\{{ Context }}\{{ Entity }}\Domain\Repository;
 
-use App\{{ Context }}\ {{ Entity }}\Domain\Model\{{ Entity }};
+use App\{{ Context }}\{{ Entity }}\Domain\Model\{{ Entity }};
 
 interface {{ Entity }}RepositoryInterface
 {
@@ -11,7 +11,7 @@ interface {{ Entity }}RepositoryInterface
      */
     public function findAll(): array;
 
-    public function findById(int $id): ?{{ Entity }}
+    public function findById(int $id): ?{{ Entity }};
 
     public function findOneByCode(string $code): ?{{ Entity }};
 

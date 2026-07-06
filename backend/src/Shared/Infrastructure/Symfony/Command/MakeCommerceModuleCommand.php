@@ -82,7 +82,7 @@ final class MakeCommerceModuleCommand extends Command
                 => $this->frontendDir . "/src/entities/{$entityKebab}/model/{$entityKebab}.dto.ts",
 
             "templates/commerce-module/frontend/api.ts.tpl"
-                => $this->frontendDir . "/src/entities/{$entityKebab}/api/{$entity}Api.tsx",
+                => $this->frontendDir . "/src/entities/{$entityKebab}/api/{$entity}Api.ts",
 
             "templates/commerce-module/frontend/list.tsx.tpl"
                 => $this->frontendDir . "/src/entities/{$entityKebab}/ui/{$entity}List.tsx",
