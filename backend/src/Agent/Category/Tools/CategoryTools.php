@@ -56,21 +56,18 @@ final readonly class CategoryTools extends AbstractTool implements ToolInterface
         ?string $description = null,
         ?bool $enabled = null,
     ): array {
-
-        try {
-            $category = ($this->updateCategory)(new updateCategoryCommand(
+        return $this->execute(function () use ($id, $code, $name, $slug, $description, $enabled): array {
+            $category = ($this->updateCategory)(new UpdateCategoryCommand(
                 id: $id,
                 code: $code,
                 name: $name,
                 slug: $slug,
                 description: $description,
-                enabled: $enabled
+                enabled: $enabled,
             ));
 
-            return ToolResponse::success($this->mapper->toArray($category))->toArray();
-        } catch (\Throwable $exception) {
-            return ToolResponse::error($exception->getMessage())->toArray();
-        }
+            return $this->mapper->toArray($category);
+        });
     }
 
     #[McpTool(name: 'list_categories', description: 'List enabled catalog categories')]
