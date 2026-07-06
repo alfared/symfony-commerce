@@ -1,18 +1,18 @@
 <?php
 
-namespace App\{{ Context }}\{{ Entity }}\Infrastructure\Api;
+namespace App\Catalog\Brand\Infrastructure\Api;
 
-use App\{{ Context }}\{{ Entity }}\Application\Create{{ Entity }}Command;
-use App\{{ Context }}\{{ Entity }}\Application\Create{{ Entity }}Handler;
+use App\Catalog\Brand\Application\CreateBrandCommand;
+use App\Catalog\Brand\Application\CreateBrandHandler;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 
 #[AsController]
-final readonly class Create{{ Entity }}Action
+final readonly class CreateBrandAction
 {
     public function __construct(
-        private Create{{ Entity }}Handler $handler,
+        private CreateBrandHandler $handler,
     ) {
     }
 
@@ -24,7 +24,7 @@ final readonly class Create{{ Entity }}Action
              return new JsonResponse(['error' => 'Invalid JSON body'], 400);
         }
 
-        ${{ entity }} = ($this->handler)(new Create{{ Entity }}Command(
+        $brand = ($this->handler)(new CreateBrandCommand(
             code: (string) $data['code'],
             name: (string) $data['name'],
             slug: (string) $data['slug'],
@@ -33,12 +33,12 @@ final readonly class Create{{ Entity }}Action
         ));
 
         return new JsonResponse([
-            'id' => ${{ entity }}->getId(),
-            'code' => ${{ entity }}->getCode(),
-            'name' => ${{ entity }}->getName(),
-            'slug' => ${{ entity }}->getSlug(),
-            'description' => ${{ entity }}->getDescription(),
-            'enabled' => ${{ entity }}->isEnabled(),
+            'id' => $brand->getId(),
+            'code' => $brand->getCode(),
+            'name' => $brand->getName(),
+            'slug' => $brand->getSlug(),
+            'description' => $brand->getDescription(),
+            'enabled' => $brand->isEnabled(),
         ], 201);
     }
 }

@@ -30,6 +30,9 @@ services:
     App\Catalog\ProductVariant\Domain\Repository\ProductVariantRepositoryInterface:
         alias: App\Catalog\ProductVariant\Infrastructure\Doctrine\ProductVariantRepository
     
+    App\Catalog\Brand\Domain\Repository\BrandRepositoryInterface:
+        alias: App\Catalog\Brand\Infrastructure\Doctrine\BrandRepository
+
     App\Catalog\Category\Infrastructure\Api\UpdateCategoryAction:
         tags: ['controller.service_arguments']
 
