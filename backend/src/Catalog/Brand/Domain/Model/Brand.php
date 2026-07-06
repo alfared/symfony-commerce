@@ -1,30 +1,30 @@
 <?php
 
-namespace App\{{ Context }}\{{ Entity }}\Domain\Model;
+namespace App\Catalog\Brand\Domain\Model;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
-use App\{{ Context }}\{{ Entity }}\Infrastructure\Api\Create{{ Entity }}Action;
+use App\Catalog\Brand\Infrastructure\Api\CreateBrandAction;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: '{{ entity }}')]
+#[ORM\Table(name: 'brand')]
 #[ApiResource(
     operations: [
         new GetCollection(),
         new Get(),
         new Post(
-            uriTemplate: '/{{ entities }}',
-            controller: Create{{ Entity }}Action::class,
+            uriTemplate: '/brands',
+            controller: CreateBrandAction::class,
             read: false,
             deserialize: false,
-            name: 'create_{{ entity }}',
+            name: 'create_brand',
         ),
     ]
 )]
-class {{ Entity }}
+class Brand
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

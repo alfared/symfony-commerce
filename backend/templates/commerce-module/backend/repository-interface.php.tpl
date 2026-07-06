@@ -15,5 +15,5 @@ interface {{ Entity }}RepositoryInterface
 
     public function findOneByCode(string $code): ?{{ Entity }};
 
-    public function save({{ Entity }}) ${{ entity }}: void;
+    public function save({{ Entity }} ${{ entity }}): void;
 }
