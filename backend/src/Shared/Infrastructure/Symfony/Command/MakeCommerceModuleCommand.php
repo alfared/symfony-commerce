@@ -9,16 +9,22 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use App\Shared\Application\Scaffolding\GeneratorRegistry;
+use App\Shared\Application\Scaffolding\ModulePlanner;
+use App\Shared\Application\Scaffolding\ModuleWriter;
+use App\Shared\Application\Scaffolding\TemplateRenderer;
 
 #[AsCommand(
-    name: 'commerce:make:module',
+    name: 'commerce-old:make:module',
     description: 'Generate DDD + React module skeleton'
 )]
 final class MakeCommerceModuleCommand extends Command
 {
     public function __construct(
-        private readonly string $backendDir,
-         private readonly string $frontendDir,
+        private readonly GeneratorRegistry $registry,
+        private readonly TemplateRenderer $renderer,
+        private readonly ModulePlanner $planner,
+        private readonly ModuleWriter $writer,
     ) {
         parent::__construct();
     }
