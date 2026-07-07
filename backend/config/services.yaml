@@ -1,7 +1,8 @@
 parameters:
-
+    commerce.backend_dir: '%kernel.project_dir%'
+    commerce.frontend_dir: '/var/www/frontend'
 services:
-    # default configuration for services in *this* file
+    Symfony\Component\Filesystem\Filesystem: ~
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
@@ -22,5 +23,59 @@ services:
     
     App\Catalog\ProductOption\Domain\Factory\ProductOptionFactoryInterface:
         alias: App\Catalog\ProductOption\Domain\Factory\ProductOptionFactory
+    
+    App\Catalog\Category\Domain\Repository\CategoryRepositoryInterface:
+        alias: App\Catalog\Category\Infrastructure\Doctrine\CategoryRepository
+    
+    App\Catalog\ProductVariant\Domain\Repository\ProductVariantRepositoryInterface:
+        alias: App\Catalog\ProductVariant\Infrastructure\Doctrine\ProductVariantRepository
+    
+    App\Catalog\Brand\Domain\Repository\BrandRepositoryInterface:
+        alias: App\Catalog\Brand\Infrastructure\Doctrine\BrandRepository
+
+    App\Catalog\Category\Infrastructure\Api\UpdateCategoryAction:
+        tags: ['controller.service_arguments']
+
+    App\Shared\Infrastructure\Symfony\Command\MakeAgentModuleCommand:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+        tags: ['console.command']
+    
+    App\Shared\Infrastructure\Symfony\Command\MakeCommerceModuleCommand:
+        arguments:
+            $backendDir: '%kernel.project_dir%'
+            $frontendDir: '%env(resolve:FRONTEND_DIR)%'
+        tags: ['console.command']
+    
+    App\Shared\Application\Scaffolding\Generator\AggregateGenerator:
+        arguments:
+            $backendDir: '%commerce.backend_dir%'
+            $frontendDir: '%commerce.frontend_dir%'
+        tags: ['commerce.scaffolding_generator']
+
+    App\Shared\Application\Scaffolding\Generator\ValueObjectGenerator:
+        arguments:
+            $backendDir: '%commerce.backend_dir%'
+        tags: ['commerce.scaffolding_generator']
+
+    App\Shared\Application\Scaffolding\Generator\DomainEventGenerator:
+        arguments:
+            $backendDir: '%commerce.backend_dir%'
+        tags: ['commerce.scaffolding_generator']
+
+    App\Shared\Application\Scaffolding\:
+        resource: '../src/Shared/Application/Scaffolding/'
+        exclude:
+            - '../src/Shared/Application/Scaffolding/Generator/'
+            - '../src/Shared/Application/Scaffolding/GeneratorRegistry.php'
+
+    App\Shared\Application\Scaffolding\GeneratorRegistry:
+        arguments:
+            $generators: !tagged_iterator commerce.scaffolding_generator
+
+    App\Shared\Infrastructure\Symfony\Command\:
+        resource: '../src/Shared/Infrastructure/Symfony/Command/'
+        tags: ['console.command']
+
 
 

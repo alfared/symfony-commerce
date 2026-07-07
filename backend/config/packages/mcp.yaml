@@ -1,0 +1,10 @@
+mcp:
+    app: 'Symfony Commerce'
+    version: '1.0.0'
+    description: 'AI tools for Symfony Commerce'
+    instructions: 'Use these tools to manage catalog data.'
+    client_transports:
+        stdio: true
+        http: true
+    http:
+        path: /_mcp
