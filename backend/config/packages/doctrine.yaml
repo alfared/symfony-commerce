@@ -40,6 +40,13 @@ doctrine:
                 prefix: 'App\Catalog\Category\Domain\Model'
                 alias: Category
 
+            Attribute:
+                type: attribute
+                is_bundle: false
+                dir: "%kernel.project_dir%/src/Catalog/Attribute/Domain"
+                prefix: 'App\Catalog\Attribute\Domain'
+                alias: Attribute
+
 when@test:
     doctrine:
         dbal:

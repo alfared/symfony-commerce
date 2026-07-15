@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Infrastructure\Symfony\Command;
+namespace App\Agent\Shared\Infrastructure\Symfony\Command;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;

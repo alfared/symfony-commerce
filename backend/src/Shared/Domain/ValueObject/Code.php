@@ -6,9 +6,10 @@ namespace App\Shared\Domain\ValueObject;
 
 abstract readonly class Code
 {
-    final public function __construct(
-        protected string $value,
-    ) {
+    protected string $value;
+
+    final public function __construct(string $value)
+    {
         $value = trim($value);
 
         if ($value === '') {
