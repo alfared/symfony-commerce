@@ -36,7 +36,7 @@ services:
     App\Catalog\Category\Infrastructure\Api\UpdateCategoryAction:
         tags: ["controller.service_arguments"]
 
-    App\Shared\Infrastructure\Symfony\Command\MakeAgentModuleCommand:
+    App\Agent\Shared\Infrastructure\Symfony\Command\MakeAgentModuleCommand:
         arguments:
             $projectDir: "%kernel.project_dir%"
         tags: ["console.command"]

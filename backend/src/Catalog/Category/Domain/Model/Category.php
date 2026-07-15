@@ -102,4 +102,23 @@ class Category
     public function isEnabled(): bool { return $this->enabled; }
     public function setEnabled(bool $enabled): void { $this->enabled = $enabled; }
     public function getProducts(): Collection { return $this->products; }
+    public function addProduct(Product $product): void 
+    {
+        if ($this->products->contains($product)) {
+            return;
+        }
+
+        $this->products->add($product);
+        $product->changeCategory($this);
+    }
+    public function removeProduct(Product $product): void
+    {
+        if (!$this->products->removeElement($product)) {
+            return;
+        }
+
+        if ($product->category() === $this) {
+            $product->changeCategory(null);
+        }
+    }
 }
