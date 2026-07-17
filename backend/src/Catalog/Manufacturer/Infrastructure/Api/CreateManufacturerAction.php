@@ -1,14 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Catalog\Manufacturer\Infrastructure\Api;
 
 use App\Catalog\Manufacturer\Application\CreateManufacturerCommand;
 use App\Catalog\Manufacturer\Application\CreateManufacturerHandler;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\Routing\Attribute\Route;
 
-#[AsController]
+#[Route(
+    path: '/api/manufacturers',
+    name: 'api_manufacturer_create',
+    methods: ['POST'],
+)]
 final readonly class CreateManufacturerAction
 {
     public function __construct(
@@ -18,27 +24,43 @@ final readonly class CreateManufacturerAction
 
     public function __invoke(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
+        try {
+            /** @var array<string, mixed> $data */
+            $data = $request->toArray();
 
-        if (!is_array($data)) {
-             return new JsonResponse(['error' => 'Invalid JSON body'], 400);
+            $id = ($this->handler)(new CreateManufacturerCommand(
+                code: $this->requiredString($data, 'code'),
+                name: $this->requiredString($data, 'name'),
+                slug: $this->requiredString($data, 'slug'),
+            ));
+
+            return new JsonResponse(
+                data: ['id' => $id],
+                status: JsonResponse::HTTP_CREATED,
+            );
+
+        } catch (\InvalidArgumentException|\DomainException $exception) {
+            return new JsonResponse(
+                data: ['error' => $exception->getMessage()],
+                status: JsonResponse::HTTP_UNPROCESSABLE_ENTITY,
+            );
+        }
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function requiredString(array $data, string $field): string
+    {
+        $value = $data[$field] ?? null;
+
+        if (!is_string($value) || trim($value) === '') {
+            throw new \InvalidArgumentException(sprintf(
+                'Field "%s" is required.',
+                $field,
+            ));
         }
 
-        $manufacturer = ($this->handler)(new CreateManufacturerCommand(
-            code: (string) $data['code'],
-            name: (string) $data['name'],
-            slug: (string) $data['slug'],
-            description: $data['description'] ?? null,
-            enabled: (bool) ($data['enabled'] ?? true),
-        ));
-
-        return new JsonResponse([
-            'id' => $manufacturer->getId(),
-            'code' => $manufacturer->getCode(),
-            'name' => $manufacturer->getName(),
-            'slug' => $manufacturer->getSlug(),
-            'description' => $manufacturer->getDescription(),
-            'enabled' => $manufacturer->isEnabled(),
-        ], 201);
+        return $value;
     }
 }
