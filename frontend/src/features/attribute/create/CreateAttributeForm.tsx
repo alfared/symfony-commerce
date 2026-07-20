@@ -1,60 +1,147 @@
-import { useState } from 'react';
-import type { FormEvent } from 'react';
-import type { CreateAttributePayload } from '@/entities/attribute/model/attribute.dto';
+import { FormEvent, useState } from "react";
+import { useCreateAttribute } from "../../../entities/attribute/api/useAttributes";
+import type { AttributeType } from "../../../entities/attribute/model/attribute";
 
-type Props = {
-    onSubmit: (payload: CreateAttributePayload) => void;
-};
+const attributeTypes: AttributeType[] = [
+  "text",
+  "textarea",
+  "boolean",
+  "integer",
+  "decimal",
+  "date",
+  "select",
+  "multi_select",
+];
 
-export function CreateAttributeForm({ onSubmit }: Props) {
-    const [form, setForm] = useState<CreateAttributePayload>({
-        code: '',
-        name: '',
-        slug: '',
-        description: '',
-        enabled: true,
+export function CreateAttributeForm() {
+  const createAttribute = useCreateAttribute();
+
+  const [code, setCode] = useState("");
+  const [name, setName] = useState("");
+  const [type, setType] = useState<AttributeType>("text");
+  const [required, setRequired] = useState(false);
+  const [filterable, setFilterable] = useState(false);
+  const [searchable, setSearchable] = useState(false);
+  const [variantAxis, setVariantAxis] = useState(false);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    await createAttribute.mutateAsync({
+      code,
+      name,
+      type,
+      required,
+      filterable,
+      searchable,
+      variantAxis,
     });
 
-    function submit(event: FormEvent) {
-        event.preventDefault();
-        onSubmit(form);
-    }
+    setCode("");
+    setName("");
+    setType("text");
+    setRequired(false);
+    setFilterable(false);
+    setSearchable(false);
+    setVariantAxis(false);
+  }
+  const supportsOptions = type === "select" || type === "multi_select";
 
-    return (
-        <form onSubmit={submit} className="grid gap-3 rounded-2xl border border-slate-800 bg-slate-900 p-5">
-            <h2 className="text-x1 font-semibold text-slate-50">Create Attribute</h2>
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-4 rounded-xl border bg-white p-6"
+    >
+      <h2 className="text-xl font-semibold">Create attribute</h2>
 
-            <input 
-                className="rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50"
-                placeholder="Code"
-                value={form.code}
-                onChange={(event) => setForm({...form, code: event.target.value })}
-            />
-
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2">
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Code</span>
             <input
-                className="rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50"
-                placeholder="Name"
-                value={form.name}
-                onChange={(event) => setForm({...form, code: event.target.value })}
+              value={code}
+              onChange={(event) => setCode(event.target.value)}
+              placeholder="color"
+              required
+              className="w-full rounded-md border px-3 py-2"
             />
+          </label>
 
-              <input
-                className="rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50"
-                placeholder="Slug"
-                value={form.slug}
-                onChange={(event) => setForm({ ...form, slug: event.target.value })}
-            />
-
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Name</span>
             <input
-                className="rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-slate-50"
-                placeholder="Description"
-                value={form.description ?? ''}
-                onChange={(event) => setForm({ ...form, description: event.target.value })}
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              placeholder="Color"
+              required
+              className="w-full rounded-md border px-3 py-2"
             />
+          </label>
+          <label className="block space-y-1">
+            <span className="text-sm font-medium">Type</span>
+            <select
+              value={type}
+              onChange={(event) => setType(event.target.value as AttributeType)}
+              className="w-full rounded-md border px-3 py-2"
+            >
+              {attributeTypes.map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Checkbox label="Required" checked={required} onChange={setRequired} />
+        <Checkbox
+          label="Filterable"
+          checked={filterable}
+          onChange={setFilterable}
+        />
+        <Checkbox
+          label="Searchable"
+          checked={searchable}
+          onChange={setSearchable}
+        />
+        <Checkbox
+          label="Variant axis"
+          checked={variantAxis}
+          onChange={setVariantAxis}
+          disabled={!supportsOptions}
+        />
+      </div>
 
-            <button className="rounded-md bg-white px-4 py-2 font-semibold text-slate-950">
-                Create 
-            </button>
-        </form>
-    );
+      {createAttribute.error && (
+        <p className="text-sm text-red-600"> {createAttribute.error.message}</p>
+      )}
+
+      <button
+        type="submit"
+        disabled={createAttribute.isPending}
+        className="rounded-md bg-black px-4 py-2 text-white disabled:opacity-50"
+      >
+        {createAttribute.isPending ? "Creating..." : "Create attribute"}
+      </button>
+    </form>
+  );
+}
+function Checkbox({
+  label,
+  checked,
+  disabled = false,
+  onChange,
+}: CheckboxProps) {
+  return (
+    <label className="flex items-center gap-2">
+      <input
+        type="checkbox"
+        checked={checked}
+        disabled={disabled}
+        onChange={(event) => onChange(event.target.checked)}
+      />
+      <span>{label}</span>
+    </label>
+  );
 }

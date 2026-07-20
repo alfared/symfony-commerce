@@ -19,4 +19,9 @@ interface AttributeRepositoryInterface
     public function findByCode(AttributeCode $code): ?Attribute;
 
     public function exists(AttributeCode $code): bool;
+
+    /**
+     * @return list<Attribute>
+     */
+    public function findAll(): array;
 }
