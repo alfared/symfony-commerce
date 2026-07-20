@@ -66,4 +66,19 @@ final class AttributeRepository extends ServiceEntityRepository implements Attri
 
         return $result !== null;
     }
+
+    /**
+     * @return list<Attribute>
+     */
+    public function findAll(): array
+    {
+        /** @var list<Attribute> $attributes */
+        $attributes = $this->createQueryBuilder('attribute')
+            ->orderBy('attribute.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        return $attributes;
+    }
+
 }
