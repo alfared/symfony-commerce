@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  getProducts,
-  createProduct
-} from "@/entities/product/api/product.api";
+import { getProducts, createProduct } from "@/entities/product/api/product.api";
 import { fetchProductVariants } from "@/entities/product-variant/api/product-variant.api";
 import type { Product } from "@/entities/product/model/product";
 import type { ProductVariant } from "@/entities/product-variant/model/product-variant";

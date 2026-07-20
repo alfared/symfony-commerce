@@ -5,7 +5,10 @@ doctrine:
             attribute_id: App\Catalog\Attribute\Infrastructure\Doctrine\Type\AttributeIdType
             attribute_code: App\Catalog\Attribute\Infrastructure\Doctrine\Type\AttributeCodeType
             attribute_name: App\Catalog\Attribute\Infrastructure\Doctrine\Type\AttributeNameType
-
+            manufacturer_id: App\Catalog\Manufacturer\Infrastructure\Doctrine\Type\ManufacturerIdType
+            manufacturer_code: App\Catalog\Manufacturer\Infrastructure\Doctrine\Type\ManufacturerCodeType
+            manufacturer_name: App\Catalog\Manufacturer\Infrastructure\Doctrine\Type\ManufacturerNameType
+            manufacturer_slug: App\Catalog\Manufacturer\Infrastructure\Doctrine\Type\ManufacturerSlugType
         profiling_collect_backtrace: "%kernel.debug%"
     orm:
         auto_mapping: false
@@ -46,6 +49,12 @@ doctrine:
                 dir: "%kernel.project_dir%/src/Catalog/Attribute/Domain"
                 prefix: 'App\Catalog\Attribute\Domain'
                 alias: Attribute
+            Manufacturer:
+                type: attribute
+                is_bundle: false
+                dir: "%kernel.project_dir%/src/Catalog/Manufacturer/Domain"
+                prefix: 'App\Catalog\Manufacturer\Domain'
+                alias: Manufacturer
 
 when@test:
     doctrine:
