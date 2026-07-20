@@ -1,2 +1,8 @@
 controllers:
     resource: routing.controllers
+
+attribute_controllers:
+    resource:
+        path: ../src/Catalog/Attribute/Infrastructure/Api/
+        namespace: App\Catalog\Attribute\Infrastructure\Api
+    type: attribute

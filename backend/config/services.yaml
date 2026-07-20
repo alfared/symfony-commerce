@@ -1,81 +1,84 @@
 parameters:
-    commerce.backend_dir: '%kernel.project_dir%'
-    commerce.frontend_dir: '/var/www/frontend'
+    commerce.backend_dir: "%kernel.project_dir%"
+    commerce.frontend_dir: "/var/www/frontend"
 services:
     Symfony\Component\Filesystem\Filesystem: ~
     _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
+        autowire: true # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
     App\:
-        resource: '../src/'
+        resource: "../src/"
         exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
+            - "../src/DependencyInjection/"
+            - "../src/Entity/"
+            - "../src/Kernel.php"
     App\Catalog\Product\Domain\Factory\ProductFactoryInterface:
         alias: App\Catalog\Product\Domain\Factory\ProductFactory
 
     App\Catalog\ProductVariant\Domain\Factory\ProductVariantFactoryInterface:
         alias: App\Catalog\ProductVariant\Domain\Factory\ProductVariantFactory
-    
+
     App\Catalog\Product\Domain\Repository\ProductRepositoryInterface:
         alias: App\Catalog\Product\Infrastructure\Doctrine\ProductRepository
-    
+
     App\Catalog\ProductOption\Domain\Factory\ProductOptionFactoryInterface:
         alias: App\Catalog\ProductOption\Domain\Factory\ProductOptionFactory
-    
+
     App\Catalog\Category\Domain\Repository\CategoryRepositoryInterface:
         alias: App\Catalog\Category\Infrastructure\Doctrine\CategoryRepository
-    
+
     App\Catalog\ProductVariant\Domain\Repository\ProductVariantRepositoryInterface:
         alias: App\Catalog\ProductVariant\Infrastructure\Doctrine\ProductVariantRepository
-    
+
     App\Catalog\Brand\Domain\Repository\BrandRepositoryInterface:
         alias: App\Catalog\Brand\Infrastructure\Doctrine\BrandRepository
 
     App\Catalog\Category\Infrastructure\Api\UpdateCategoryAction:
-        tags: ['controller.service_arguments']
+        tags: ["controller.service_arguments"]
 
-    App\Shared\Infrastructure\Symfony\Command\MakeAgentModuleCommand:
+    App\Agent\Shared\Infrastructure\Symfony\Command\MakeAgentModuleCommand:
         arguments:
-            $projectDir: '%kernel.project_dir%'
-        tags: ['console.command']
-    
+            $projectDir: "%kernel.project_dir%"
+        tags: ["console.command"]
+
     App\Shared\Infrastructure\Symfony\Command\MakeCommerceModuleCommand:
         arguments:
-            $backendDir: '%kernel.project_dir%'
-            $frontendDir: '%env(resolve:FRONTEND_DIR)%'
-        tags: ['console.command']
-    
+            $backendDir: "%kernel.project_dir%"
+            $frontendDir: "%env(resolve:FRONTEND_DIR)%"
+        tags: ["console.command"]
+
     App\Shared\Application\Scaffolding\Generator\AggregateGenerator:
         arguments:
-            $backendDir: '%commerce.backend_dir%'
-            $frontendDir: '%commerce.frontend_dir%'
-        tags: ['commerce.scaffolding_generator']
+            $backendDir: "%commerce.backend_dir%"
+            $frontendDir: "%commerce.frontend_dir%"
+        tags: ["commerce.scaffolding_generator"]
 
     App\Shared\Application\Scaffolding\Generator\ValueObjectGenerator:
         arguments:
-            $backendDir: '%commerce.backend_dir%'
-        tags: ['commerce.scaffolding_generator']
+            $backendDir: "%commerce.backend_dir%"
+        tags: ["commerce.scaffolding_generator"]
 
     App\Shared\Application\Scaffolding\Generator\DomainEventGenerator:
         arguments:
-            $backendDir: '%commerce.backend_dir%'
-        tags: ['commerce.scaffolding_generator']
+            $backendDir: "%commerce.backend_dir%"
+        tags: ["commerce.scaffolding_generator"]
 
     App\Shared\Application\Scaffolding\:
-        resource: '../src/Shared/Application/Scaffolding/'
+        resource: "../src/Shared/Application/Scaffolding/"
         exclude:
-            - '../src/Shared/Application/Scaffolding/Generator/'
-            - '../src/Shared/Application/Scaffolding/GeneratorRegistry.php'
+            - "../src/Shared/Application/Scaffolding/Generator/"
+            - "../src/Shared/Application/Scaffolding/GeneratorRegistry.php"
 
     App\Shared\Application\Scaffolding\GeneratorRegistry:
         arguments:
             $generators: !tagged_iterator commerce.scaffolding_generator
 
     App\Shared\Infrastructure\Symfony\Command\:
-        resource: '../src/Shared/Infrastructure/Symfony/Command/'
-        tags: ['console.command']
+        resource: "../src/Shared/Infrastructure/Symfony/Command/"
+        tags: ["console.command"]
 
+    App\Catalog\Attribute\Domain\Repository\AttributeRepositoryInterface:
+        alias: App\Catalog\Attribute\Infrastructure\Doctrine\AttributeRepository
 
-
+    App\Catalog\Manufacturer\Domain\Repository\ManufacturerRepositoryInterface:
+        alias: App\Catalog\Manufacturer\Infrastructure\Doctrine\ManufacturerRepository

@@ -52,7 +52,7 @@ class Product
     #[ORM\Column(nullable: true)]
     private ?bool $active = null;
 
-    #[ORM\ManyToOne(targetEntity: Category::class)]
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?Category $category = null;
 
@@ -138,12 +138,22 @@ class Product
         return $this;
     }
 
+    public function category(): ?Category
+    {
+        return $this->category;
+    }
+
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
     public function setCategory(?Category $category): void
+    {
+        $this->category = $category;
+    }
+
+    public function changeCategory(?Category $category): void
     {
         $this->category = $category;
     }
