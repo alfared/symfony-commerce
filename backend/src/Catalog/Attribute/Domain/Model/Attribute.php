@@ -286,6 +286,44 @@ final class Attribute
         $this->touch();
     }
 
+    public function update(
+        AttributeName $name,
+        AttributeType $type,
+        bool $required,
+        bool $filterable,
+        bool $searchable,
+        bool $variantAxis,
+        bool $enabled
+    ): void {
+        $this->rename($name);
+
+        if (!$type->hasOptions() && !$variantAxis) {
+            $this->removeFromVariantAxis();
+        }
+
+        $this->changeType($type);
+
+        $required
+            ? $this->markAsRequired()
+            : $this->markAsOptional();
+
+        $filterable
+            ? $this->markAsFilterable()
+            : $this->markAsNotFilterable();
+
+            $searchable
+        ? $this->markAsSearchable()
+        : $this->markAsNotSearchable();
+
+        $variantAxis
+            ? $this->markAsVariantAxis()
+            : $this->removeFromVariantAxis();
+
+        $enabled
+            ? $this->enable()
+            : $this->disable();
+    }
+
     public function id(): AttributeId
     {
         return $this->id;
