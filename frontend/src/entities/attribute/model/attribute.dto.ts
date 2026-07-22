@@ -13,3 +13,13 @@ export interface CreateAttributeDto {
 export interface CreateAttributeResponse {
   id: string;
 }
+
+export interface UpdateAttributeDto {
+  name: string;
+  type: AttributeType;
+  required: boolean;
+  filterable: boolean;
+  searchable: boolean;
+  variantAxis: boolean;
+  enabled: boolean;
+}

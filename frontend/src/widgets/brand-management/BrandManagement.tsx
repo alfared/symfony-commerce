@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { createBrand, getBrands } from '@/entities/brand/api/brandApi';
-import type { Brand } from '@/entities/brand/model/brand';
-import type { CreateBrandPayload } from '@/entities/brand/model/brand.dto';
-import { BrandList } from '@/entities/brand/ui/BrandList';
-import { CreateBrandForm } from '@/features/brand/create/CreateBrandForm';
+import { useEffect, useState } from "react";
+import { createBrand, getBrands } from "@/entities/brand/api/BrandApi";
+import type { Brand } from "@/entities/brand/model/brand";
+import type { CreateBrandPayload } from "@/entities/brand/model/brand.dto";
+import { BrandList } from "@/entities/brand/ui/BrandList";
+import { CreateBrandForm } from "@/features/brand/create/CreateBrandForm";
 
 export function BrandManagement() {
   const [items, setItems] = useState<Brand[]>([]);
