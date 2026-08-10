@@ -2,14 +2,19 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import {
   createAttribute,
+  deleteAttribute,
   getAttribute,
   getAttributes,
   updateAttribute,
+  createAttributeOption,
+  getAttributeOptions,
 } from "./AttributeApi";
 
 import type {
   CreateAttributeDto,
   UpdateAttributeDto,
+  CreateAttributeOptionDto,
+  CreateAttributeOptionVariables,
 } from "../model/attribute.dto";
 
 export const attributeQueryKeys = {
@@ -22,6 +27,9 @@ export const attributeQueryKeys = {
   details: () => [...attributeQueryKeys.all, "detail"] as const,
 
   detail: (id: string) => [...attributeQueryKeys.details(), id] as const,
+
+  options: (attributeId: string) =>
+    [...attributeQueryKeys.detail(attributeId), "options"] as const,
 };
 
 export function useAttributes() {
@@ -71,6 +79,53 @@ export function useUpdateAttribute() {
         }),
         queryClient.invalidateQueries({
           queryKey: attributeQueryKeys.detail(variables.id),
+        }),
+      ]);
+    },
+  });
+}
+
+export function useDeleteAttribute() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: string) => deleteAttribute(id),
+
+    onSuccess: async (_, id) => {
+      queryClient.removeQueries({
+        queryKey: attributeQueryKeys.detail(id),
+      });
+
+      await queryClient.invalidateQueries({
+        queryKey: attributeQueryKeys.lists(),
+      });
+    },
+  });
+}
+
+export function useAttributeOptions(attributeId: string | undefined) {
+  return useQuery({
+    queryKey: attributeQueryKeys.options(attributeId ?? ""),
+    queryFn: () => getAttributeOptions(attributeId as string),
+    enabled: Boolean(attributeId),
+  });
+}
+
+export function useCreateAttributeOption() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ attributeId, payload }: CreateAttributeOptionVariables) =>
+      createAttributeOption(attributeId, payload),
+
+    onSuccess: async (_, variables) => {
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: attributeQueryKeys.options(variables.attributeId),
+        }),
+
+        queryClient.invalidateQueries({
+          queryKey: attributeQueryKeys.detail(variables.attributeId),
         }),
       ]);
     },

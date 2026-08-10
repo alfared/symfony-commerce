@@ -23,3 +23,18 @@ export interface UpdateAttributeDto {
   variantAxis: boolean;
   enabled: boolean;
 }
+
+export interface CreateAttributeOptionDto {
+  code: string;
+  name: string;
+  sortOrder: number;
+}
+
+export interface CreateAttributeOptionResponse {
+  id: string;
+}
+
+export interface CreateAttributeOptionVariables {
+  attributeId: string;
+  payload: CreateAttributeOptionDto;
+}

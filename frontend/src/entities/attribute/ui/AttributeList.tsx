@@ -1,5 +1,6 @@
 import { useAttributes } from "../api/useAttributes";
 import { Link } from "react-router-dom";
+import { DeleteAttributeButton } from "@/features/attribute/delete/DeleteAttributeButton";
 
 export function AttributeList() {
   const {
@@ -116,13 +117,17 @@ export function AttributeList() {
                       {attribute.enabled ? "Enabled" : "Disabled"}
                     </span>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 flex gap-2">
                     <Link
                       to={`/admin/attributes/${attribute.id}/edit`}
                       className="font-medium text-blue-700 hover:underline"
                     >
                       Edit
                     </Link>
+                    <DeleteAttributeButton
+                      attributeId={attribute.id}
+                      attributeName={attribute.name}
+                    />
                   </td>
                 </tr>
               );

@@ -1,5 +1,7 @@
-import type { Attribute } from "../model/attribute";
+import type { Attribute, AttributeOption } from "../model/attribute";
 import type {
+  CreateAttributeOptionDto,
+  CreateAttributeOptionResponse,
   CreateAttributeDto,
   CreateAttributeResponse,
   UpdateAttributeDto,
@@ -107,4 +109,46 @@ export async function deleteAttribute(id: string): Promise<void> {
   if (!response.ok) {
     throw new Error(await getErrorMessage(response));
   }
+}
+
+export async function getAttributeOptions(
+  attributeId: string,
+): Promise<AttributeOption[]> {
+  const response = await fetch(
+    `${API_URL}/api/attributes/${encodeURIComponent(attributeId)}/options`,
+    {
+      headers: {
+        Accept: "application/json",
+      },
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(await getErrorMessage(response));
+  }
+
+  return response.json() as Promise<AttributeOption[]>;
+}
+
+export async function createAttributeOption(
+  attributeId: string,
+  payload: CreateAttributeOptionDto,
+): Promise<CreateAttributeOptionResponse> {
+  const response = await fetch(
+    `${API_URL}/api/attributes/${encodeURIComponent(attributeId)}/options`,
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(await getErrorMessage(response));
+  }
+
+  return response.json() as Promise<CreateAttributeOptionResponse>;
 }
