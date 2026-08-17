@@ -5,6 +5,7 @@ import type {
   CreateAttributeDto,
   CreateAttributeResponse,
   UpdateAttributeDto,
+  UpdateAttributeOptionDto,
 } from "../model/attribute.dto";
 
 const API_URL =
@@ -151,4 +152,45 @@ export async function createAttributeOption(
   }
 
   return response.json() as Promise<CreateAttributeOptionResponse>;
+}
+
+export async function updateAttributeOption(
+  attributeId: string,
+  optionId: string,
+  payload: UpdateAttributeOptionDto,
+): Promise<void> {
+  const response = await fetch(
+    `${API_URL}/api/attributes/${encodeURIComponent(attributeId)}/options/${encodeURIComponent(optionId)}`,
+    {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(await getErrorMessage(response));
+  }
+}
+
+export async function deleteAttributeOption(
+  attributeId: string,
+  optionId: string,
+): Promise<void> {
+  const response = await fetch(
+    `${API_URL}/api/attributes/${encodeURIComponent(attributeId)}/options/${encodeURIComponent(optionId)}`,
+    {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+      },
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(await getErrorMessage(response));
+  }
 }

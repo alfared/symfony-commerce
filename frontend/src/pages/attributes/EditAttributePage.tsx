@@ -6,8 +6,9 @@ import {
 } from "@/entities/attribute/api/useAttributes";
 
 import type { UpdateAttributeDto } from "@/entities/attribute/model/attribute.dto";
-
 import { EditAttributeForm } from "@/features/attribute/edit/EditAttributeForm";
+import { AddAttributeOptionForm } from "@/features/attribute-option/create/AddAttributeOptionForm";
+import { AttributeOptionList } from "@/entities/attribute/ui/AttributeOptionList";
 
 export function EditAttributePage() {
   const { id } = useParams<{ id: string }>();
@@ -97,6 +98,23 @@ export function EditAttributePage() {
         onSubmit={handleSubmit}
         onCancel={() => navigate("/admin/attributes")}
       />
+
+      {attributeQuery.data.type === "select" ||
+      attributeQuery.data.type === "multi_select" ? (
+        <section className="space-y-4">
+          <div>
+            <h2 className="text-2xl font-semibold">Attribute options</h2>
+
+            <p className="text-slate-400">
+              Manage selectable values for this attribute.
+            </p>
+          </div>
+
+          <AddAttributeOptionForm attributeId={attributeQuery.data.id} />
+
+          <AttributeOptionList attributeId={attributeQuery.data.id} />
+        </section>
+      ) : null}
     </section>
   );
 }

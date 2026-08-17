@@ -38,3 +38,19 @@ export interface CreateAttributeOptionVariables {
   attributeId: string;
   payload: CreateAttributeOptionDto;
 }
+
+export interface UpdateAttributeOptionVariables {
+  attributeId: string;
+  optionId: string;
+  payload: UpdateAttributeOptionDto;
+}
+export interface UpdateAttributeOptionDto {
+  name: string;
+  sortOrder: number;
+  enabled: boolean;
+}
+
+export interface DeleteAttributeOptionVariables {
+  attributeId: string;
+  optionId: string;
+}

@@ -8,13 +8,16 @@ import {
   updateAttribute,
   createAttributeOption,
   getAttributeOptions,
+  updateAttributeOption,
+  deleteAttributeOption,
 } from "./AttributeApi";
 
 import type {
   CreateAttributeDto,
   UpdateAttributeDto,
-  CreateAttributeOptionDto,
   CreateAttributeOptionVariables,
+  UpdateAttributeOptionVariables,
+  DeleteAttributeOptionVariables,
 } from "../model/attribute.dto";
 
 export const attributeQueryKeys = {
@@ -128,6 +131,40 @@ export function useCreateAttributeOption() {
           queryKey: attributeQueryKeys.detail(variables.attributeId),
         }),
       ]);
+    },
+  });
+}
+
+export function useUpdateAttributeOption() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      attributeId,
+      optionId,
+      payload,
+    }: UpdateAttributeOptionVariables) =>
+      updateAttributeOption(attributeId, optionId, payload),
+
+    onSuccess: async (_, variables) => {
+      await queryClient.invalidateQueries({
+        queryKey: attributeQueryKeys.options(variables.attributeId),
+      });
+    },
+  });
+}
+
+export function useDeleteAttributeOption() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ attributeId, optionId }: DeleteAttributeOptionVariables) =>
+      deleteAttributeOption(attributeId, optionId),
+
+    onSuccess: async (_, variables) => {
+      await queryClient.invalidateQueries({
+        queryKey: attributeQueryKeys.options(variables.attributeId),
+      });
     },
   });
 }
