@@ -1,4 +1,6 @@
 import { useAttributes } from "../api/useAttributes";
+import { Link } from "react-router-dom";
+import { DeleteAttributeButton } from "@/features/attribute/delete/DeleteAttributeButton";
 
 export function AttributeList() {
   const {
@@ -50,7 +52,7 @@ export function AttributeList() {
     <div className="overflow-hidden rounded-xl border bg-white">
       <div className="flex items-center justify-between border-b px-5 py-4">
         <div>
-          <h2 className="font-semibold">Attribute list</h2>
+          <h2 className="font-semibold text-slate-900">Attribute list</h2>
           <p className="text-sm text-slate-500">
             {attributes.length}{" "}
             {attributes.length === 1 ? "attribute" : "attributes"}
@@ -71,6 +73,7 @@ export function AttributeList() {
               <th className="px-5 py-3 font-medium">Type</th>
               <th className="px-5 py-3 font-medium">Configuration</th>
               <th className="px-5 py-3 font-medium">Status</th>
+              <th className="px-4 py-3 text-left">Actions</th>
             </tr>
           </thead>
 
@@ -94,7 +97,7 @@ export function AttributeList() {
                   </td>
 
                   <td className="px-5 py-4">
-                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium">
+                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-900">
                       {attribute.type}
                     </span>
                   </td>
@@ -113,6 +116,18 @@ export function AttributeList() {
                     >
                       {attribute.enabled ? "Enabled" : "Disabled"}
                     </span>
+                  </td>
+                  <td className="px-4 py-3 flex gap-2">
+                    <Link
+                      to={`/admin/attributes/${attribute.id}/edit`}
+                      className="font-medium text-blue-700 hover:underline"
+                    >
+                      Edit
+                    </Link>
+                    <DeleteAttributeButton
+                      attributeId={attribute.id}
+                      attributeName={attribute.name}
+                    />
                   </td>
                 </tr>
               );

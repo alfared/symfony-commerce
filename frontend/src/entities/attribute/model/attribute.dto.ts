@@ -13,3 +13,44 @@ export interface CreateAttributeDto {
 export interface CreateAttributeResponse {
   id: string;
 }
+
+export interface UpdateAttributeDto {
+  name: string;
+  type: AttributeType;
+  required: boolean;
+  filterable: boolean;
+  searchable: boolean;
+  variantAxis: boolean;
+  enabled: boolean;
+}
+
+export interface CreateAttributeOptionDto {
+  code: string;
+  name: string;
+  sortOrder: number;
+}
+
+export interface CreateAttributeOptionResponse {
+  id: string;
+}
+
+export interface CreateAttributeOptionVariables {
+  attributeId: string;
+  payload: CreateAttributeOptionDto;
+}
+
+export interface UpdateAttributeOptionVariables {
+  attributeId: string;
+  optionId: string;
+  payload: UpdateAttributeOptionDto;
+}
+export interface UpdateAttributeOptionDto {
+  name: string;
+  sortOrder: number;
+  enabled: boolean;
+}
+
+export interface DeleteAttributeOptionVariables {
+  attributeId: string;
+  optionId: string;
+}
