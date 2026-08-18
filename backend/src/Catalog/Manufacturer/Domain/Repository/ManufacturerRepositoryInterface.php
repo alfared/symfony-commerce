@@ -22,4 +22,9 @@ interface ManufacturerRepositoryInterface
     public function existsByCode(ManufacturerCode $code): bool;
 
     public function existsBySlug(ManufacturerSlug $slug): bool;
+
+    /**
+     * @return list<Manufacturer>
+     */
+    public function findAll(): array;
 }

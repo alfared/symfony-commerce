@@ -64,6 +64,22 @@ final class ManufacturerRepository extends ServiceEntityRepository implements Ma
         return $manufacturer;
     }
 
+    /**
+     * @return list<Manufacturer>
+     */
+    #[Override]
+    public function findAll(): array
+    {
+        /** @var list<Manufacturer> $manufacturers */
+        $manufacturers = $this->createQueryBuilder('manufacturer')
+            ->orderBy('manufacturer.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        return $manufacturers;
+        
+    }
+
 
     public function existsByCode(ManufacturerCode $code): bool
     {

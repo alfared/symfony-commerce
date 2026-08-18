@@ -87,6 +87,7 @@ final class Manufacturer
         }
 
         $this->name = $name;
+        $this->touch();
     }
 
     public function changeSlug(ManufacturerSlug $slug): void
@@ -94,6 +95,22 @@ final class Manufacturer
         if ($this->slug->equals($slug)) {
             return;
         }
+
+        $this->slug = $slug;
+        $this->touch();
+    }
+
+    public function update(
+        ManufacturerName $name,
+        ManufacturerSlug $slug,
+        bool $enabled,
+    ):void {
+        $this->rename($name);
+        $this->changeSlug($slug);
+
+        $enabled
+            ? $this->enable()
+            : $this->disable();
     }
 
     public function enable(): void
@@ -149,5 +166,10 @@ final class Manufacturer
     private function touch(): void
     {
         $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    public function slug(): ManufacturerSlug
+    {
+        return $this->slug;
     }
 }

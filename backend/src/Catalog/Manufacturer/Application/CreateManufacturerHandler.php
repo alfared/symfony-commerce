@@ -20,12 +20,6 @@ final readonly class CreateManufacturerHandler
         $code = new ManufacturerCode($command->code);
         $slug = new ManufacturerSlug($command->slug);
 
-        $manufacturer = $this->factory->create(
-            code: $command->code,
-            name: $command->name,
-            slug: $command->slug,
-        );
-
         if ($this->manufacturers->existsByCode($code)) {
             throw new \DomainException(sprintf(
                 'Manufacturer with code "%s" already exists.',
@@ -39,6 +33,12 @@ final readonly class CreateManufacturerHandler
                 $command->slug,
             ));
         }
+
+        $manufacturer = $this->factory->create(
+            code: $command->code,
+            name: $command->name,
+            slug: $command->slug,
+        );
 
         $this->manufacturers->save($manufacturer);
 
