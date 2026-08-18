@@ -1,12 +1,9 @@
-import { useEffect, useState } from "react";
-import {
-  createManufacturer,
-  getManufacturers,
-} from "@/entities/manufacturer/api/ManufacturerApi";
-import type { Manufacturer } from "@/entities/manufacturer/model/manufacturer";
-import type { CreateManufacturerPayload } from "@/entities/manufacturer/model/manufacturer.dto";
-import { ManufacturerList } from "@/entities/manufacturer/ui/ManufacturerList";
-import { CreateManufacturerForm } from "@/features/manufacturer/create/CreateManufacturerForm";
+import { useEffect, useState } from 'react';
+import { createManufacturer, getManufacturers } from '@/entities/manufacturer/api/manufacturerApi';
+import type { Manufacturer } from '@/entities/manufacturer/model/manufacturer';
+import type { CreateManufacturerPayload } from '@/entities/manufacturer/model/manufacturer.dto';
+import { ManufacturerList } from '@/entities/manufacturer/ui/ManufacturerList';
+import { CreateManufacturerForm } from '@/features/manufacturer/create/CreateManufacturerForm';
 
 export function ManufacturerManagement() {
   const [items, setItems] = useState<Manufacturer[]>([]);

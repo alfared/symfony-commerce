@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { useCreateAttribute } from "../../../entities/attribute/api/useAttributes";
 import type { AttributeType } from "../../../entities/attribute/model/attribute";
 
@@ -52,37 +52,37 @@ export function CreateAttributeForm() {
       onSubmit={handleSubmit}
       className="space-y-4 rounded-xl border bg-white p-6"
     >
-      <h2 className="text-xl font-semibold text-slate-900">Create attribute</h2>
+      <h2 className="text-xl font-semibold">Create attribute</h2>
 
       <div className="grid gap-4 md:grid-cols-2">
         <div className="grid gap-4 md:grid-cols-2">
           <label className="space-y-1">
-            <span className="text-sm font-medium text-slate-900">Code</span>
+            <span className="text-sm font-medium">Code</span>
             <input
               value={code}
               onChange={(event) => setCode(event.target.value)}
               placeholder="color"
               required
-              className="w-full rounded-md border px-3 py-2 text-slate-900"
+              className="w-full rounded-md border px-3 py-2"
             />
           </label>
 
           <label className="space-y-1">
-            <span className="text-sm font-medium text-slate-900">Name</span>
+            <span className="text-sm font-medium">Name</span>
             <input
               value={name}
               onChange={(event) => setName(event.target.value)}
               placeholder="Color"
               required
-              className="w-full rounded-md border px-3 py-2 text-slate-900"
+              className="w-full rounded-md border px-3 py-2"
             />
           </label>
           <label className="block space-y-1">
-            <span className="text-sm font-medium text-slate-900">Type</span>
+            <span className="text-sm font-medium">Type</span>
             <select
               value={type}
               onChange={(event) => setType(event.target.value as AttributeType)}
-              className="w-full rounded-md border px-3 py-2 text-slate-900"
+              className="w-full rounded-md border px-3 py-2"
             >
               {attributeTypes.map((item) => (
                 <option key={item} value={item}>
@@ -93,7 +93,7 @@ export function CreateAttributeForm() {
           </label>
         </div>
       </div>
-      <div className="grid gap-3 sm:grid-cols-2 text-slate-900">
+      <div className="grid gap-3 sm:grid-cols-2">
         <Checkbox label="Required" checked={required} onChange={setRequired} />
         <Checkbox
           label="Filterable"
@@ -127,14 +127,6 @@ export function CreateAttributeForm() {
     </form>
   );
 }
-
-interface CheckboxProps {
-  label: string;
-  checked: boolean;
-  disabled?: boolean;
-  onChange: (checked: boolean) => void;
-}
-
 function Checkbox({
   label,
   checked,

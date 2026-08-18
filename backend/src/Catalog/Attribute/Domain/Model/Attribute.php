@@ -256,36 +256,6 @@ final class Attribute
         $this->touch();
     }
 
-    public function findOptionById(string $optionId): ?AttributeOption
-    {
-        foreach ($this->options as $option) {
-            if ($option->id() === $optionId) {
-                return $option;
-            }
-        }
-
-        return null;
-    }
-    
-    public function removeOptionById(string $optionId): bool
-    {
-        foreach ($this->options as $option) {
-            $id = $option->id();
-
-            if (
-                ($id instanceof \Stringable && (string) $id === $optionId)
-                || (is_string($id) && $id === $optionId)
-            ) {
-                $this->options->removeElement($option);
-                $this->touch();
-
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public function removeFromVariantAxis(): void
     {
         if (!$this->variantAxis) {

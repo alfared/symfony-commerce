@@ -6,7 +6,6 @@ import { CatalogPage } from "@/pages/catalog/CatalogPage";
 import { ProductPage } from "@/pages/product/ProductPage";
 import { AdminPage } from "@/pages/admin/AdminPage";
 import { AttributesPage } from "@/pages/attributes/AttributesPage";
-import { EditAttributePage } from "@/pages/attributes/EditAttributePage";
 
 export const router = createBrowserRouter([
   {
@@ -22,7 +21,6 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <AdminPage /> },
           { path: "attributes", element: <AttributesPage /> },
-          { path: "attributes/:id/edit", element: <EditAttributePage /> },
         ],
       },
     ],
